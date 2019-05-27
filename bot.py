@@ -13,7 +13,7 @@ async def on_member_join(member):
         welcomechannel = client.get_channel(582661044296744961)
         embed = discord.Embed(
             title = "Welcome!",
-            description = f"Hey {member.mention} welcome to {guild.name}!",
+            description = f"Hey {member.mention} welcome to {member.guild.name}!",
             color = 0x07999b
         )
         await channel.send(embed = embed)
