@@ -9,6 +9,7 @@ async def on_ready():
     print("BOt is ready")
 @client.event
 async def on_member_join(member):
+    channel = member.guild.system_channel
     if member.guild.id == 561249245672374273:
         welcomechannel = client.get_channel(582661044296744961)
         embed = discord.Embed(
