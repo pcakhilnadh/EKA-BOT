@@ -13,12 +13,13 @@ async def on_member_join(member):
     channel = member.guild.system_channel
     if member.guild.id == 422681969210556416:
         welcomechannel = client.get_channel(569025914604617729)
+        
         embed = discord.Embed(
             title = "Welcome!",
             description = f"Hey {member.mention} welcome to {member.guild.name}!",
             color = 0x07999b
         )
-        await channel.send(embed = embed)
+        await welcomechannel.send(embed = embed)
 @client.event
 async def on_member_remove(member):
     channel = member.guild.system_channel
