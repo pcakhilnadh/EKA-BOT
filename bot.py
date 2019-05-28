@@ -5,13 +5,15 @@ from discord.ext import commands
 client = commands.Bot(command_prefix='.')
 
 @client.event
-async def on_ready():
-    print("BOt is ready")
+async def on_ready(member):
+    channel = member.guild.system_channel
+    print("BOt is ready",channel)
+    await channel.send("BOT is up")
 @client.event
 async def on_member_join(member):
     channel = member.guild.system_channel
-    if member.guild.id == 561249245672374273:
-        welcomechannel = client.get_channel(582661044296744961)
+    if member.guild.id == 422681969210556416:
+        welcomechannel = client.get_channel(569025914604617729)
         embed = discord.Embed(
             title = "Welcome!",
             description = f"Hey {member.mention} welcome to {member.guild.name}!",
