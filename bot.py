@@ -29,7 +29,7 @@ async def on_member_join(member):
         embed.set_footer(text="Team EKA |", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
         embed.add_field(name=f"Want to join With Us ?", value=f"React with :envelope_with_arrow: in {apply_eka.mention} \n\n")
         embed.add_field(name=f"Want to join get GUEST role ?", value=f":sos: React with EKA logo in {about.mention} ")
-        embed.set_image(url="attachment://recruitment.jpg")
+        #embed.set_image(url="attachment://recruitment.jpg")
         await welcomechannel.send(file=file,embed = embed)
 @client.event
 async def on_member_remove(member):
@@ -42,6 +42,10 @@ async def on_member_remove(member):
             color = 0x07999b
         )
         await welcomechannel.send(embed = embed)
+
+@client.command(aliases=['Ping'])
+async def ping(ctx):
+    await ctx.send(f'Pong! EKA BOT Response time {round(client.latency*1000)} ms')
 
 client.run(os.environ.get('TOKEN')) #Token is env config var in Heroku Settings
 #client.run(read_token())
