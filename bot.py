@@ -12,7 +12,7 @@ def read_token():
 '''
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="itz__pc")
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="itz__pc"))
     print("BOt is ready")
     
 @client.event
