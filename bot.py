@@ -5,10 +5,9 @@ from discord.ext import commands
 client = commands.Bot(command_prefix='.')
 
 @client.event
-async def on_ready(member):
-    channel = member.guild.system_channel
-    print("BOt is ready",channel)
-    await channel.send("BOT is up")
+async def on_ready():
+    print("BOt is ready")
+    
 @client.event
 async def on_member_join(member):
     channel = member.guild.system_channel
