@@ -14,7 +14,11 @@ def read_token():
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="itz__pc"))
     print("BOt is ready")
-    
+
+@client.event
+async def on_command_error(ctx,error):
+    await ctx.send(error)
+
 @client.event
 async def on_member_join(member):
     if member.guild.id == 561249245672374273:
