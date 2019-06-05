@@ -23,7 +23,7 @@ async def on_member_join(member):
         about =client.get_channel(567962887054950420)
         directory=os.getcwd()
         file = discord.File(os.path.join(directory+str('/')+"images/recruitment.jpg"),filename="recruitment.jpg")
-        embed = discord.Embed(title="**__WELCOME TO EKA__**", colour=discord.Colour(0x673c27), url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", description=f"Hello {member.mention} \n\n:point_right:Elite Kerala Alliance. \n:point_right: MLCW - GWL & EWL -ELITE clan.\n :point_right: WCL Semi Finalists, EWL Quarter Finalists.\n\n  ", timestamp=datetime.datetime.utcfromtimestamp(1559028785))
+        embed = discord.Embed(title="**__WELCOME TO EKA__**", colour=discord.Colour(0x673c27), url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", description=f"Hello {member.mention} \n\n:point_right:Elite Kerala Alliance. \n:point_right: MLCW - GWL & EWL -ELITE clan.\n:point_right: WCL, EWL, NDL WELTER\n\n  ", timestamp=datetime.datetime.utcfromtimestamp(1559028785))
         embed.set_thumbnail(url=str(member.avatar_url))
         embed.set_author(name="Elite Kerala Alliance ", url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
         embed.set_footer(text="Team EKA |", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
