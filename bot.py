@@ -3,7 +3,11 @@ import datetime
 import discord
 from discord.ext import commands
 
-client = commands.Bot(command_prefix='.')
+async def get_pre(client,message):
+    prefixes =['eka ','Eka ','EKA ']
+    return commands.when_mentioned_or(*prefixes)(client, message)
+
+client = commands.Bot(command_prefix=get_pre)
 '''
 def read_token():
     with open("token.txt","r") as f:
