@@ -1,59 +1,155 @@
-import os
-import datetime
+
+__version__ = '0.0.1'
+__author__ = 'Pc'
+__description__ = 'A Discord Bot for Elite Kerala Alliance !'
+
 import discord
+import sys, traceback
+import aiohttp
+import asyncio
 from discord.ext import commands
+from datetime import datetime
+import logging
+#userFunctions
+from cogs.utils import config,context
+import os
 
-async def get_pre(client,message):
-    prefixes =['eka ','Eka ','EKA ']
-    return commands.when_mentioned_or(*prefixes)(client, message)
+description='A Discord Bot for Elite Kerala Alliance'
+OWNER = 286367865462980608
 
-client = commands.Bot(command_prefix=get_pre)
-'''
-def read_token():
-    with open("token.txt","r") as f:
-        lines=f.readlines()
-        return lines[0].strip() 
-'''
-@client.event
-async def on_ready():
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="itz__pc"))
-    print("BOt is ready")
 
-@client.event
-async def on_command_error(ctx,error):
-    await ctx.send(error)
+def get_prefix(bot, message):
+    """A callable Prefix for our bot. This could be edited to allow per server prefixes."""
 
-@client.event
-async def on_member_join(member):
-    if member.guild.id == 561249245672374273:
-        welcomechannel = client.get_channel(569973273253904385)
-        apply_eka = client.get_channel(566609366770515989)
-        about =client.get_channel(567962887054950420)
-        directory=os.getcwd()
-        file = discord.File(os.path.join(directory+str('/')+"images/recruitment.jpg"),filename="recruitment.jpg")
-        embed = discord.Embed(title="**__WELCOME TO EKA__**", colour=discord.Colour(0x673c27), url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", description=f"Hello {member.mention}|{member.name}  \n\n:point_right:Elite Kerala Alliance. \n:point_right: MLCW - GWL & EWL -ELITE clan.\n:point_right: WCL, EWL, NDL WELTER\n\n  ", timestamp=datetime.datetime.utcfromtimestamp(1559028785))
-        embed.set_thumbnail(url=str(member.avatar_url))
-        embed.set_author(name="Elite Kerala Alliance ", url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
-        embed.set_footer(text="Team EKA |", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
-        embed.add_field(name=f"Want to join With Us ?", value=f"React with :envelope_with_arrow: in {apply_eka.mention} \n\n\n\n")
-        embed.add_field(name=f"Want to join get GUEST role ?", value=f":sos: React with EKA logo in {about.mention} \n\n")
-        #embed.set_image(url="attachment://recruitment.jpg")
-        await welcomechannel.send(file=file,embed = embed)
-@client.event
-async def on_member_remove(member):
+    prefixes = ['eka ', 'EKA ','Eka ']
+    if not message.guild:
+        return 'eka'
+    if message.author.id == OWNER:
+        prefixes.append('')
+
+    return commands.when_mentioned_or(*prefixes)(bot, message)
+
+initial_extensions = (
+    'cogs.owner',
+    'cogs.debug',
     
-    if member.guild.id == 561249245672374273:
-        welcomechannel = client.get_channel(562568072146321418)
-        embed = discord.Embed(
-            title = "You Lost a member",
-            description = f"{member} left {member.guild.name} server!",
-            color = 0x07999b
+)
+
+
+
+class EkaBot(commands.AutoShardedBot):
+
+    def __init__(self):
+        super().__init__(command_prefix=get_prefix, description=description)
+        self.owner_id = [286367865462980608,409664906254876678,346223879485652992]
+        self.channel_id= [586915160015503390]
+        self._task = self.loop.create_task(self.initialize())
+        # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
+        self.activity = discord.Game(name='EKA')
+        for extension in initial_extensions:
+            try:
+                self.load_extension(extension)
+            except:
+                print(f'Failed to load extension {extension}.', file=sys.stderr)
+                traceback.print_exc()
+
+        
+
+    async def initialize(self):
+        self.session = aiohttp.ClientSession(loop=self.loop)
+        await self.wait_until_ready()
+        #self.owner = self.get_user(self.owner_id)
+
+
+    async def process_commands(self, message):
+        ctx = await self.get_context(message, cls=context.Context)
+        if ctx.command is None:
+            return
+        if message.channel.id not in self.channel_id:
+            #await message.channel.send("Bot commands don't work in this channel")
+            return
+        if message.author.id not in self.owner_id:
+            await message.channel.send(f"Bot commands for owner only Your ID {message.author.id} ")
+            return
+        await self.invoke(ctx)
+
+
+    async def on_message(self, message):
+        if message.author.bot:
+            return
+        await self.process_commands(message)
+
+
+    async def on_ready(self):
+        bot_online_channel_id = 586993318035062785
+        total_width = 0
+        infos = (
+            'EKA Bot',
+            f'{self.user.name} [{self.user.id}]',
+            f'Discord: {discord.__version__}',
+            f'Guilds: {len(self.guilds)}',
+            f'Users: {len(self.users)}',
+            f'Shards: {self.shard_count}'
         )
-        await welcomechannel.send(embed = embed)
+        for info in infos:
+            width = len(str(info)) + 4
+            if width > total_width:
+                total_width = width
 
-@client.command(aliases=['Ping'])
-async def ping(ctx):
-    await ctx.send(f'Pong! EKA BOT Response time {round(client.latency*1000)} ms')
+        sep = '+'.join('-' * int((total_width/2)+1))
+        sep = f'+{sep}+'
 
-client.run(os.environ.get('TOKEN')) #Token is env config var in Heroku Settings
-#client.run(read_token())
+        information = [sep]
+        for info in infos:
+            elem = f'|{info:^{total_width}}|'
+            information.append(elem)
+        information.append(sep)
+        bot_online_channel = super().get_channel(bot_online_channel_id)
+        title = " BOT Online Status"
+        description= "\n".join(information)
+        embed = discord.Embed(title=title,
+                              description=description,
+                              color=discord.Color.green())
+        await bot_online_channel.send(embed=embed)
+
+        
+        # print(f'\n\nLogged in as: {self.user.name} - {self.user.id}\nVersion: {discord.__version__}\n\n'
+        #       f'Guilds: {len(self.guilds)}\nUsers: {len(self.users)}\n'
+        #       f'Shards: {self.shard_count}\n\n')
+
+        print(f'Successfully logged in and booted...!')
+
+
+    async def on_resumed(self):
+        print('resumed...')
+
+
+    async def close(self):
+        bot_online_channel_id = 586993318035062785
+        bot_online_channel = super().get_channel(bot_online_channel_id)
+        title = " BOT Online Status"
+        description= "\n BOT is offline"
+        embed = discord.Embed(title=title,
+                              description=description,
+                              color=discord.Color.red())
+        await bot_online_channel.send(embed=embed)
+        print(f'BOT is offline')
+        await super().close()
+        await self.session.close()
+        self._task.cancel()
+    
+
+    def run(self):
+        try:
+            super().run(os.environ.get('TOKEN'), bot=True, reconnect=True)
+        except Exception as e:
+            print(f'Troubles running the bot!\nError: {e}')
+            # traceback.print_exc()
+
+def main():
+    bot = EkaBot()
+    bot.run()
+
+
+if __name__ == '__main__':
+    main()
