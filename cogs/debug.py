@@ -50,7 +50,7 @@ Owner: {guild.owner} [{guild.owner.id}]"""
         embed = discord.Embed(title=title,
                               description=description,
                               color=discord.Color.green())
-        embed.set_thumbnail(url=guild.icon.url)
+        embed.set_thumbnail(url=guild.icon_url)
         await joinchannel.send(embed=embed)
 
         total_servers = len(self.bot.guilds)
