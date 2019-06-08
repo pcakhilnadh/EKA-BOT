@@ -35,9 +35,8 @@ async def on_member_join(member):
         embed.set_thumbnail(url=str(member.avatar_url))
         embed.set_author(name="Elite Kerala Alliance ", url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
         embed.set_footer(text="Team EKA |", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
-        embed.add_field(name=f"Want to join With Us ?", value=f"React with :envelope_with_arrow: in {apply_eka.mention} \n\n")
-        embed.add_field(name=f"\n", value=f"\n\n")
-        embed.add_field(name=f"Want to join get GUEST role ?", value=f":sos: React with EKA logo in {about.mention} ")
+        embed.add_field(name=f"Want to join With Us ?", value=f"React with :envelope_with_arrow: in {apply_eka.mention} \n\n\n\n")
+        embed.add_field(name=f"Want to join get GUEST role ?", value=f":sos: React with EKA logo in {about.mention} \n\n")
         #embed.set_image(url="attachment://recruitment.jpg")
         await welcomechannel.send(file=file,embed = embed)
 @client.event
