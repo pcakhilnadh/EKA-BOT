@@ -43,9 +43,9 @@ async def on_member_join(member):
 async def on_member_remove(member):
     
     if member.guild.id == 561249245672374273:
-        welcomechannel = client.get_channel(582661044296744961)
+        welcomechannel = client.get_channel(562568072146321418)
         embed = discord.Embed(
-            title = "Bye Bye",
+            title = "You Lost a member",
             description = f"{member} left {member.guild.name} server!",
             color = 0x07999b
         )
