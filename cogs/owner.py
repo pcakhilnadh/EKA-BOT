@@ -47,7 +47,7 @@ class Owner(commands.Cog):
             #embed.set_image(url="attachment://recruitment.jpg")
             await welcomechannel.send(file=file,embed = embed)
     @commands.Cog.listener()
-    async def on_member_remove(member):
+    async def on_member_remove(self,member):
         if member.guild.id == 561249245672374273:
             welcomechannel = client.get_channel(562568072146321418)
             embed = discord.Embed(title = "You Lost a member",
