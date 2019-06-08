@@ -11,7 +11,7 @@ from discord.ext import commands
 from datetime import datetime
 import logging
 #userFunctions
-from cogs.utils import config,context
+from cogs.utils import context
 import os
 
 description='A Discord Bot for Elite Kerala Alliance'
