@@ -51,7 +51,7 @@ Owner: {guild.owner} [{guild.owner.id}]"""
                               description=description,
                               color=discord.Color.green())
         embed.set_thumbnail(url=guild.icon.url)
-        await self.joinchannel.send(embed=embed)
+        await joinchannel.send(embed=embed)
 
         total_servers = len(self.bot.guilds)
         total_vc = self.vc_channels[0]
@@ -70,7 +70,7 @@ Owner: {guild.owner} [{guild.owner.id}]"""
         description = f"{guild.name} [{guild.id}]"
         embed = discord.Embed(title=title, description=description, color=discord.Color.red())
     #    embed.set_thumbnail(url=guild.icon.url)
-        await self.joinchannel.send(embed=embed)
+        await joinchannel.send(embed=embed)
         total_servers = len(self.bot.guilds)
         total_vc = self.vc_channels[0]
         last_left_vc = self.vc_channels[1]
