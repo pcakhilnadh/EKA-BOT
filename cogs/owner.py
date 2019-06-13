@@ -75,7 +75,7 @@ class Owner(commands.Cog):
     async def vote(self, ctx, user:discord.User):
         """eka vote @mention"""
         chId=self.bot.get_channel(id=588736568597151760)
-        msg= await self.bot.get_channel(id=588736568597151760).send(f"Please vote for {user.mention} according to war performance. :thumbsup: Good :thumbsdown: Bad")
+        msg= await self.bot.get_channel(id=588736568597151760).send(f"@here Please vote for {user.mention} according to war performance. :thumbsup: Good :thumbsdown: Bad")
         await msg.add_reaction("\U0001f44d")
         await msg.add_reaction("\U0001f44e")
         await self.bot.get_channel(id=569086204621094912).send(f"Voting for evaluvating war performance of {user.name} has started. Cast your votes {chId.mention}")
