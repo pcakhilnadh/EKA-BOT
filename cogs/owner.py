@@ -70,6 +70,16 @@ class Owner(commands.Cog):
             )
             await welcomechannel.send(embed = embed)
 
+    @commands.command()
+    #@commands.is_owner()
+    async def vote(self, ctx, user:discord.User):
+        """eka vote @mention"""
+        chId=self.bot.get_channel(id=588736568597151760)
+        msg= await self.bot.get_channel(id=588736568597151760).send("Please vote for {user.mention} according to war performance")
+        await msg.add_reaction("\U0001f44d")
+        await msg.add_reaction("\U0001f44e")
+        await self.bot.get_channel(id=569086204621094912).send("Voting for evaluvating war performance of {user.name} has started. Cast your votes {chId.mention}")
+                    
 
 
 def setup(bot):

@@ -41,8 +41,8 @@ class EkaBot(commands.AutoShardedBot):
 
     def __init__(self):
         super().__init__(command_prefix=get_prefix, description=description)
-        self.owner_id = [286367865462980608,409664906254876678,346223879485652992]
-        self.channel_id= [586915160015503390,562537063052738569,586932176403169281]
+        self.owner_id = [286367865462980608,409664906254876678,346223879485652992,569086204621094912]
+        self.channel_id= [586915160015503390,562537063052738569,586932176403169281,564838401258422283]
         self._task = self.loop.create_task(self.initialize())
         # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
         self.activity = discord.Game(type=discord.ActivityType.listening,name='itz__pc')
@@ -68,8 +68,19 @@ class EkaBot(commands.AutoShardedBot):
         if message.channel.id not in self.channel_id:
             #await message.channel.send("Bot commands don't work in this channel")
             return
-        if message.author.id not in self.owner_id:
-            await message.channel.send(f"Bot commands for owner only Your ID {message.author.id} ")
+        if message.author.id :
+            if message.author.id in self.owner_id:
+                self.invoke(ctx)
+            if message.author.bot:
+                return
+            flag=0
+            for r in message.author.roles:
+                if r.name =='C o м м a n d e r':
+                    flag=1
+            if flag==1:
+                await self.invoke(ctx)
+            else:
+                await message.channel.send(f"Only C o м м a n d e r can use EKA BOT")
             return
         await self.invoke(ctx)
 
