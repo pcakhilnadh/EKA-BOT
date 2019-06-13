@@ -41,8 +41,9 @@ class EkaBot(commands.AutoShardedBot):
 
     def __init__(self):
         super().__init__(command_prefix=get_prefix, description=description)
+        
         self.owner_id = [286367865462980608,409664906254876678,346223879485652992,569086204621094912]
-        self.channel_id= [586915160015503390,562537063052738569,586932176403169281,564838401258422283]
+        self.channel_id= [586915160015503390,562537063052738569,586932176403169281,564838401258422283,569086204621094912]
         self._task = self.loop.create_task(self.initialize())
         # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
         self.activity = discord.Game(type=discord.ActivityType.listening,name='itz__pc')
