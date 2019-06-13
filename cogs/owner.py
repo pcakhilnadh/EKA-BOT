@@ -126,19 +126,22 @@ class Owner(commands.Cog):
                                 await messageObj.remove_reaction(payload.emoji,memberObj)
                 except:
                     pass
-                if (str(payload.emoji)==str(dislikeReactionObj.emoji)) or (str(payload.emoji)==str(likeReactionObj.emoji)):
-                    async for user in likeReactionObj.users():
-                        if user.id == payload.user_id:
-                            likeCount=1
-                    async for user in dislikeReactionObj.users():
-                        if user.id == payload.user_id:
-                            dislikeCount=1
-                if likeCount+dislikeCount>1:
-                    if str(likeReactionObj.emoji) == str(payload.emoji):
-                        await messageObj.remove_reaction(payload.emoji,memberObj)
-                    if str(dislikeReactionObj.emoji) == str(payload.emoji):
-                        await messageObj.remove_reaction(payload.emoji,memberObj)
-        
+                try:
+                    if (str(payload.emoji)==str(dislikeReactionObj.emoji)) or (str(payload.emoji)==str(likeReactionObj.emoji)):
+                        async for user in likeReactionObj.users():
+                            if user.id == payload.user_id:
+                                likeCount=1
+                        async for user in dislikeReactionObj.users():
+                            if user.id == payload.user_id:
+                                dislikeCount=1
+                    if likeCount+dislikeCount>1:
+                        if str(likeReactionObj.emoji) == str(payload.emoji):
+                            await messageObj.remove_reaction(payload.emoji,memberObj)
+                        if str(dislikeReactionObj.emoji) == str(payload.emoji):
+                            await messageObj.remove_reaction(payload.emoji,memberObj)
+                except:
+                    pass
+            
         
 
         
