@@ -82,7 +82,66 @@ class Owner(commands.Cog):
             
         await msg.add_reaction("\U0001f44d")
         await msg.add_reaction("\U0001f44e")
-        await self.bot.get_channel(id=569086204621094912).send(f"@here Voting for evaluvating war performance of {user.name} has started. Cast your votes {chId.mention}")
+        await self.bot.get_channel(id=569086204621094912).send(f"Voting for evaluvating war performance of {user.name} has started. Cast your votes {chId.mention}")
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self,payload):
+        if payload.channel_id == 588736568597151760:
+            
+            memberObj=self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
+            messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
+            if (discord.utils.get(memberObj.roles, name='f ι e l d  м a r ѕ н a l')):
+                try:
+                    u=self.bot.get_user(payload.user_id)
+                    await u.send("You can't cast vote sorry.Sorry, You need to have higher roles in our server to cast vote.")
+                    await messageObj.remove_reaction(payload.emoji,memberObj)
+                except:
+                    await self.bot.get_channel(id=569086204621094912).send(f"{memberObj.mention} DM is disabled. Sorry, You need to have higher roles to cast the vote")
+                    await messageObj.remove_reaction(payload.emoji,memberObj)
+            else:
+                likeCount=dislikeCount=0
+                try:
+                    likeReactionObj=messageObj.reactions[0]
+                    dislikeReactionObj=messageObj.reactions[1]
+                    noentryReactionObj=messageObj.reactions[2]
+                    tickReactionObj=messageObj.reactions[3]
+                
+                except IndexError:
+                    pass
+                try:
+                    if str(noentryReactionObj.emoji)== str(payload.emoji):
+                        if discord.utils.get(memberObj.roles, name='C o м м a n d e r'):
+                            await messageObj.add_reaction("✅")
+                        else:
+                            if not memberObj.bot:
+                                await messageObj.remove_reaction(payload.emoji,memberObj)
+                except:
+                    pass
+                try:
+                    if str(tickReactionObj.emoji)== str(payload.emoji):
+                        if discord.utils.get(memberObj.roles, name='C o м м a n d e r'):
+                            messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
+                            await self.bot.get_channel(id=564838401258422283).send(f" Message{list(str(messageObj.content).split())[3]} Performance Evaluation  Result Like {likeReactionObj.count} Dislike{dislikeReactionObj.count} Poll has been ended by {memberObj.name}")
+                        else:
+                            if not memberObj.bot:
+                                await messageObj.remove_reaction(payload.emoji,memberObj)
+                except:
+                    pass
+                if (str(payload.emoji)==str(dislikeReactionObj.emoji)) or (str(payload.emoji)==str(likeReactionObj.emoji)):
+                    async for user in likeReactionObj.users():
+                        if user.id == payload.user_id:
+                            likeCount=1
+                    async for user in dislikeReactionObj.users():
+                        if user.id == payload.user_id:
+                            dislikeCount=1
+                if likeCount+dislikeCount>1:
+                    if str(likeReactionObj.emoji) == str(payload.emoji):
+                        await messageObj.remove_reaction(payload.emoji,memberObj)
+                    if str(dislikeReactionObj.emoji) == str(payload.emoji):
+                        await messageObj.remove_reaction(payload.emoji,memberObj)
+        
+        
+
+        
                     
 
 
