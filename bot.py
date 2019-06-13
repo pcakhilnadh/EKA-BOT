@@ -70,7 +70,8 @@ class EkaBot(commands.AutoShardedBot):
             return
         if message.author.id :
             if message.author.id in self.owner_id:
-                self.invoke(ctx)
+                await self.invoke(ctx)
+
             if message.author.bot:
                 return
             flag=0
