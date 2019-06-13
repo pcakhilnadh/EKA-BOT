@@ -104,8 +104,7 @@ class Owner(commands.Cog):
                     dislikeReactionObj=messageObj.reactions[1]
                     noentryReactionObj=messageObj.reactions[2]
                     tickReactionObj=messageObj.reactions[3]
-                
-                except IndexError:
+                except:
                     pass
                 try:
                     if str(noentryReactionObj.emoji)== str(payload.emoji):
@@ -113,34 +112,40 @@ class Owner(commands.Cog):
                             await messageObj.add_reaction("✅")
                         else:
                             if not memberObj.bot:
+                                #print(f'RT')
                                 await messageObj.remove_reaction(payload.emoji,memberObj)
-                except:
+                except UnboundLocalError:
                     pass
+
                 try:
                     if str(tickReactionObj.emoji)== str(payload.emoji):
                         if discord.utils.get(memberObj.roles, name='C o м м a n d e r'):
                             messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
-                            await self.bot.get_channel(id=564838401258422283).send(f" Message{list(str(messageObj.content).split())[3]} Performance Evaluation  Result Like {likeReactionObj.count} Dislike{dislikeReactionObj.count} Poll has been ended by {memberObj.name}")
+                            await self.bot.get_channel(id=564838401258422283).send(f" {list(str(messageObj.content).split())[3]} Performance Evaluation  Result **Like {likeReactionObj.count} Dislike {dislikeReactionObj.count}** Poll has been ended by {memberObj.name}")
                         else:
                             if not memberObj.bot:
+                                #print(f'NOT')
                                 await messageObj.remove_reaction(payload.emoji,memberObj)
-                except:
-                    pass
+                except UnboundLocalError:
+                    pass   
                 try:
-                    if (str(payload.emoji)==str(dislikeReactionObj.emoji)) or (str(payload.emoji)==str(likeReactionObj.emoji)):
-                        async for user in likeReactionObj.users():
-                            if user.id == payload.user_id:
-                                likeCount=1
-                        async for user in dislikeReactionObj.users():
-                            if user.id == payload.user_id:
-                                dislikeCount=1
-                    if likeCount+dislikeCount>1:
-                        if str(likeReactionObj.emoji) == str(payload.emoji):
-                            await messageObj.remove_reaction(payload.emoji,memberObj)
-                        if str(dislikeReactionObj.emoji) == str(payload.emoji):
-                            await messageObj.remove_reaction(payload.emoji,memberObj)
-                except:
+                    if not memberObj.bot:
+                        if (str(payload.emoji)==str(dislikeReactionObj.emoji)) or (str(payload.emoji)==str(likeReactionObj.emoji)):
+                            async for user in likeReactionObj.users():
+                                if user.id == payload.user_id:
+                                    likeCount=1
+                            async for user in dislikeReactionObj.users():
+                                if user.id == payload.user_id:
+                                    dislikeCount=1
+                except UnboundLocalError:
                     pass
+                
+                if likeCount+dislikeCount>1:
+                    #print(f'asd')
+                    if str(likeReactionObj.emoji) == str(payload.emoji):
+                        await messageObj.remove_reaction(payload.emoji,memberObj)
+                    if str(dislikeReactionObj.emoji) == str(payload.emoji):
+                        await messageObj.remove_reaction(payload.emoji,memberObj)
             
         
 
