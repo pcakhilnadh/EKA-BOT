@@ -82,6 +82,7 @@ class Owner(commands.Cog):
             
         await msg.add_reaction("\U0001f44d")
         await msg.add_reaction("\U0001f44e")
+        await msg.add_reaction("⛔")
         await self.bot.get_channel(id=569086204621094912).send(f"Voting for evaluvating war performance of {user.name} has started. Cast your votes {chId.mention}")
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):
