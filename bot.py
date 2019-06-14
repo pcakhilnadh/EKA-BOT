@@ -32,7 +32,7 @@ def get_prefix(bot, message):
 initial_extensions = (
     'cogs.owner',
     'cogs.debug',
-    'cogs.helper'
+    'cogs.helper',
     
 )
 
@@ -47,7 +47,7 @@ class EkaBot(commands.AutoShardedBot):
         self.channel_id= [586915160015503390,562537063052738569,586932176403169281,564838401258422283,569086204621094912]
         self._task = self.loop.create_task(self.initialize())
         # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
-        self.activity = discord.Activity(type=discord.ActivityType.listening,name='Pc',
+        self.activity = discord.Activity(type=discord.ActivityType.listening,name='Pc')
         for extension in initial_extensions:
             try:
                 self.load_extension(extension)
