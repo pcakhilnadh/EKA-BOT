@@ -115,7 +115,10 @@ Server = {guild}
         elif isinstance(error, discord.errors.Forbidden):
             await ctx.send("I don't have enough permsissions to do that!")
         elif isinstance(error, commands.errors.MissingPermissions):
-            await ctx.author.send("You don't have enough permissions to use this command!")
+            await ctx.send("You don't have enough permissions to use this command!")
+         elif isinstance(error, commands.errors.CommandOnCooldown):
+            await ctx.send("Command Cooldown Period of 3 sec ended!")
+       
         else:
             try:
                 invite = await ctx.channel.create_invite(max_uses=1)

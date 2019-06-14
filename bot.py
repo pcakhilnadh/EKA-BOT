@@ -32,6 +32,7 @@ def get_prefix(bot, message):
 initial_extensions = (
     'cogs.owner',
     'cogs.debug',
+    'cogs.helper'
     
 )
 
