@@ -116,8 +116,8 @@ Server = {guild}
             await ctx.send("I don't have enough permsissions to do that!")
         elif isinstance(error, commands.errors.MissingPermissions):
             await ctx.send("You don't have enough permissions to use this command!")
-         elif isinstance(error, commands.errors.CommandOnCooldown):
-            await ctx.send("Command Cooldown Period of 3 sec ended!")
+        elif isinstance(error, commands.errors.CommandOnCooldown):
+            pass
        
         else:
             try:
