@@ -198,7 +198,7 @@ class Helper(commands.Cog):
 
 
 
-     @commands.command(aliases=['join'])
+    @commands.command(aliases=['join'])
     async def invite(self, ctx):
         """Joins a server."""
         perms = discord.Permissions.none()
