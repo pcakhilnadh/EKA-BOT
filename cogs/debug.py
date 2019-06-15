@@ -118,6 +118,9 @@ Server = {guild}
             await ctx.send("You don't have enough permissions to use this command!")
         elif isinstance(error, commands.errors.CommandOnCooldown):
             pass
+        elif isinstance(error, commands.errors.MissingAnyRole):
+            await ctx.send(" Only C o м м a n d e r can use this command.")
+       
        
         else:
             try:

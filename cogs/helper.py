@@ -198,7 +198,7 @@ class Helper(commands.Cog):
 
 
 
-    @commands.command(aliases=['join'])
+     @commands.command(aliases=['join'])
     async def invite(self, ctx):
         """Joins a server."""
         perms = discord.Permissions.none()
@@ -216,7 +216,8 @@ class Helper(commands.Cog):
         # perms.attach_files = True
         # perms.add_reactions = True
         #await ctx.send(f'<{discord.utils.oauth_url(self.bot.user.id, perms)}>')
-        await ctx.send(f'Currently not Officially released to Public')
+        await ctx.send(f'EKA | 1947 \n **DISCORD SERVER** https://discord.gg/Dcpu9a8 \n **CLAN** https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ  ')
+
 
 
 

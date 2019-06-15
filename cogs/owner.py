@@ -71,6 +71,7 @@ class Owner(commands.Cog):
             await welcomechannel.send(embed = embed)
 
     @commands.command()
+    @commands.has_any_role("Admin","C o м м a n d e r") 
     #@commands.is_owner()
     async def vote(self, ctx, user:discord.User , message:str = None ):
         """eka vote @mention <Optional Msg>"""

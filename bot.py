@@ -70,6 +70,7 @@ class EkaBot(commands.AutoShardedBot):
         if message.channel.id not in self.channel_id:
             #await message.channel.send("Bot commands don't work in this channel")
             return
+        '''
         if message.author.id :
             if message.author.id in self.owner_id:
                 await self.invoke(ctx)
@@ -85,6 +86,7 @@ class EkaBot(commands.AutoShardedBot):
             else:
                 await message.channel.send(f"Only C o м м a n d e r can use EKA BOT")
             return
+        '''
         await self.invoke(ctx)
 
 
