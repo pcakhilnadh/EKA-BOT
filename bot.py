@@ -15,7 +15,7 @@ from cogs.utils import context
 import os
 
 description='A Discord Bot for Elite Kerala Alliance'
-OWNER = 286367865462980608
+OWNER = 0
 
 
 def get_prefix(bot, message):
@@ -32,6 +32,7 @@ def get_prefix(bot, message):
 initial_extensions = (
     'cogs.owner',
     'cogs.debug',
+    'cogs.user',
     'cogs.helper',
     
 )
