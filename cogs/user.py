@@ -22,7 +22,6 @@ class User(commands.Cog):
     async def user_avatar(self, ctx, user:discord.User):
         """--> `eka av @mentionUser `"""
         if user.bot:
-            print(f'BOT')
             return
         embed = discord.Embed(title = f"Avatar Requested of EKA Warrior : {user.name}",
             color = 0x98FB98
