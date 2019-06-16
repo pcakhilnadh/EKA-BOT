@@ -8,7 +8,6 @@ import textwrap
 from contextlib import redirect_stdout
 import io
 import os
-import psycopg2
 from typing import Union
 import datetime
 import time
