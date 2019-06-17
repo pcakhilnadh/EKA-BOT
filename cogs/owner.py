@@ -94,7 +94,7 @@ class Owner(commands.Cog):
         try:
             await user.send(f" Dear EKA Warrior {user.name} , You ought to use both attacks in war. Discuss with team the reason ASAP")
         except:
-
+            pass
 
     @commands.command()
     @commands.has_any_role("Admin","C o м м a n d e r") 
