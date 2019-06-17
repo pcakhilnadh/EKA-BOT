@@ -77,14 +77,14 @@ class Owner(commands.Cog):
         """eka vote @mention <Optional Msg>"""
         chId=self.bot.get_channel(id=588736568597151760)
         if message:
-            msg= await self.bot.get_channel(id=588736568597151760).send(f"Please vote for {user.mention} according to war performance against {message} :thumbsup: Good :thumbsdown: Bad")
+            msg= await self.bot.get_channel(id=588736568597151760).send(f"Please vote for {user.name} according to war performance against {message} :thumbsup: Good :thumbsdown: Bad")
         else:
-            msg= await self.bot.get_channel(id=588736568597151760).send(f"Please vote for {user.mention} according to war performance :thumbsup: Good :thumbsdown: Bad")
+            msg= await self.bot.get_channel(id=588736568597151760).send(f"Please vote for {user.name} according to war performance :thumbsup: Good :thumbsdown: Bad")
             
         await msg.add_reaction("\U0001f44d")
         await msg.add_reaction("\U0001f44e")
         await msg.add_reaction("⛔")
-        await self.bot.get_channel(id=569086204621094912).send(f"@here Voting for evaluvating war performance of {user.name} has started. Cast your votes {chId.mention}")
+        await self.bot.get_channel(id=564838401258422283).send(f"@here Voting for evaluvating war performance of {user.name} has started. Cast your votes {chId.mention}")
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):
         if payload.channel_id == 588736568597151760:
