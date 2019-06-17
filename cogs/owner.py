@@ -148,7 +148,7 @@ class Owner(commands.Cog):
                     if str(tickReactionObj.emoji)== str(payload.emoji):
                         if discord.utils.get(memberObj.roles, name='C o м м a n d e r'):
                             FmessageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
-                            await self.bot.get_channel(id=588736568597151760).send(f" {list(str(FmessageObj.content).split())[3]} Performance Evaluation  Result **Like {likeReactionObj.count-1} Dislike {dislikeReactionObj.count-1}** Poll has been ended by {memberObj.name}")
+                            await self.bot.get_channel(id=588736568597151760).send(f" {list(str(FmessageObj.content).split())[3]} Performance Evaluation  Result **Like** {likeReactionObj.count-1} **Dislike** {dislikeReactionObj.count-1} Poll has been ended by {memberObj.name}")
                             await messageObj.delete()
                         else:
                             if not memberObj.bot:
