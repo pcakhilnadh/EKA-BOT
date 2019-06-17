@@ -69,13 +69,23 @@ class Owner(commands.Cog):
             color = 0x07999b
             )
             await welcomechannel.send(embed = embed)
+    
+    @commands.command(aliases=['sixpack','6pack'])
+    @commands.has_any_role("Admin","C o м м a n d e r") 
+    #@commands.is_owner()
+    async def six_pack(self, ctx, user:discord.User):
+        """eka 6pack @mention <Optional Msg>"""
+        msg= await self.bot.get_channel(id=590236928918552713).send(f" @here Congratulate {user.mention} for Six Pack Performance")
+        await msg.add_reaction("💐")
+        await msg.add_reaction(":emoji_22:562691004705144843")
+        await msg.add_reaction(":emoji_23:562691044395712524")
+        await user.send(f" Dear EKA Warrior {user.name} ,Team EKA is very proud of your performance. Keep it up")
 
     @commands.command()
     @commands.has_any_role("Admin","C o м м a n d e r") 
     #@commands.is_owner()
     async def vote(self, ctx, user:discord.User , message:str = None ):
         """eka vote @mention <Optional Msg>"""
-        chId=self.bot.get_channel(id=588736568597151760)
         if message:
             msg= await self.bot.get_channel(id=588736568597151760).send(f"Please vote for {user.name} according to war performance against {message} :thumbsup: Good :thumbsdown: Bad")
         else:
