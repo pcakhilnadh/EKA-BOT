@@ -15,7 +15,7 @@ from cogs.utils import context
 import os
 
 description='A Discord Bot for Elite Kerala Alliance'
-OWNER = 0
+OWNER = 286367865462980608
 
 
 def get_prefix(bot, message):
@@ -62,7 +62,7 @@ class EkaBot(commands.AutoShardedBot):
     async def initialize(self):
         self.session = aiohttp.ClientSession(loop=self.loop)
         await self.wait_until_ready()
-        #self.owner = self.get_user(self.owner_id)
+        self.owner = self.get_user(OWNER)
 
 
     async def process_commands(self, message):
