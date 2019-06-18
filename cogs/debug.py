@@ -112,6 +112,10 @@ Server = {guild}
             await ctx.send_help(ctx.command)
         elif isinstance(error, commands.errors.NotOwner):
             await ctx.send(f"This command is only for Pc !!!!")
+            try:
+                await ctx.author.send(f"You have invoked a command not ment to be used \n Join EKA BOT Support Server if you need assistance \n https://discord.gg/jfcadBv")
+            except:
+                pass
             
         elif isinstance(error, discord.errors.Forbidden):
             await ctx.send("I don't have enough permsissions to do that!")
