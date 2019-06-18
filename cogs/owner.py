@@ -177,25 +177,25 @@ class Owner(commands.Cog):
             
         if payload.channel_id == 590236645442453544:    
             memberObj=self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
-            if payload.message_id == 590272896522256414:
+            if payload.message_id == 590430176572342273:
                 messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
                 if str(payload.emoji) == str("🔞"):
                     GuildObj = self.bot.get_guild(561249245672374273)
                     roleObj = discord.utils.get(GuildObj.roles, name = "18+")
                     await memberObj.add_roles(roleObj)
-                    await self.bot.get_channel(id=590236645442453544).send(f"{memberObj.mention} Reacted to get `18+` Role ")
+                    #await self.bot.get_channel(id=590236645442453544).send(f"{memberObj.mention} Reacted to get `18+` Role ")
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
         
         if payload.channel_id == 590236645442453544:    
             memberObj=self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
-            if payload.message_id == 590272896522256414:
+            if payload.message_id == 590430176572342273:
                 messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
                 if str(payload.emoji) == str("🔞"):
                     GuildObj = self.bot.get_guild(561249245672374273)
                     roleObj = discord.utils.get(GuildObj.roles, name = "18+")
                     await memberObj.remove_roles(roleObj)
-                    await self.bot.get_channel(id=590236645442453544).send(f"{memberObj.mention} Reacted to Remove `18+` Role ")
+                    #await self.bot.get_channel(id=590236645442453544).send(f"{memberObj.mention} Reacted to Remove `18+` Role ")
     @commands.Cog.listener()
     async def on_message(self,message):
         
