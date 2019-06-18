@@ -36,7 +36,7 @@ class User(commands.Cog):
         if user.bot:
             return
         embed = discord.Embed(title = f"You have a message from : {ctx.message.author}",
-            description = message,
+            description = msg,
             color = 0x98FB98
             )
         embed.set_image(url = ctx.message.author.avatar_url) 
