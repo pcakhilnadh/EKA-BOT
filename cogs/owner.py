@@ -40,16 +40,16 @@ class Owner(commands.Cog):
             about =self.bot.get_channel(567962887054950420)
             directory=os.getcwd()
             file = discord.File(os.path.join(directory+str('/')+"images/recruitment.jpg"),filename="recruitment.jpg")
-            embed = discord.Embed(title="**__WELCOME TO EKA__**", colour=discord.Colour(0x673c27), url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", description=f"Hello {member.mention} | {member.name}  \n\n:point_right:Elite Kerala Alliance. \n:point_right: MLCW - GWL  clan.\n:point_right: WCL, EWL, NDL WELTER\n\n  ", timestamp=datetime.datetime.utcfromtimestamp(x))
+            embed = discord.Embed(title="**__WELCOME TO EKA__**", colour=discord.Colour(0x673c27), url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", description=f"Hello {member.name},  \n\n:point_right:Elite Kerala Alliance. \n:point_right: MLCW - GWL  clan.\n:point_right: WCL, EWL, NDL WELTER\n\n  ", timestamp=datetime.datetime.utcfromtimestamp(x))
             embed.set_thumbnail(url=str(member.avatar_url))
             embed.set_author(name="Elite Kerala Alliance ", url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
             embed.set_footer(text="Team EKA |", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
             embed.add_field(name=f"Want to join With Us ?", value=f"React with :envelope_with_arrow: in {apply_eka.mention} \n\n\n\n")
             embed.add_field(name=f"Want to get GUEST role ?", value=f":sos: React with EKA logo in {about.mention} \n\n")
             #embed.set_image(url="attachment://recruitment.jpg")
-            await welcomechannel.send(file=file,embed = embed)
+            await welcomechannel.send(content=f"{member.mention}",file=file,embed = embed)
             try:
-                await member.send(file=file, embed =embed)
+                await member.send(content=f"{member.mention}",file=file, embed =embed)
             except:
                 pass
         if member.guild.id == 586915159377707027: #Support Server
