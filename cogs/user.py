@@ -43,9 +43,11 @@ class User(commands.Cog):
         
         try:
             await user.send(embed=embed)
-            await self.bot.get_channel(id=590236645442453544).send(f"Hey {ctx.message.author}, Your message has been sent")
+            Msg=await self.bot.get_channel(id=590236645442453544).send(f"Hey {ctx.message.author}, Your message has been sent `eka dm @mentionUser YourMessage` to DM someone")
+            await Msg.add_reaction("✅")
         except:
-            await self.bot.get_channel(id=590236645442453544).send(f"Sorry {ctx.message.author}, The user has disabled DM. Your message could not be sent")
+            Msg=await self.bot.get_channel(id=590236645442453544).send(f"Sorry {ctx.message.author}, The user has disabled DM. Your message could not be sent.`eka dm @mentionUser YourMessage` to DM someone")
+            await Msg.add_reaction("❌")
         await ctx.message.delete()
 
         
