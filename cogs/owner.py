@@ -89,13 +89,24 @@ class Owner(commands.Cog):
     #@commands.is_owner()
     async def miss_hit(self, ctx, user:discord.User):
         """eka misshit @mention <Optional Msg>"""
-        msg= await self.bot.get_channel(id=590236928918552713).send(f" {user.mention} has been warned for missing hit in the WAR :sos: ")
+        msg= await self.bot.get_channel(id=590236928918552713).send(f" {user.mention} has been warned for missing hit  in the WAR :sos: ")
         await msg.add_reaction("⚠")
         try:
             await user.send(f" Dear EKA Warrior {user.name} , You ought to use both attacks in war. Discuss with team the reason ASAP")
         except:
             pass
-
+    @commands.command(aliases=['latehit','lateattack'])
+    @commands.has_any_role("Admin","C o м м a n d e r") 
+    #@commands.is_owner()
+    async def late_hit(self, ctx, user:discord.User):
+        """eka latehit @mention <Optional Msg>"""
+        msg= await self.bot.get_channel(id=590236928918552713).send(f" {user.mention} has been warned for Late hit  in the WAR :sos: ")
+        await msg.add_reaction("⚠")
+        try:
+            await user.send(f" Dear EKA Warrior {user.name} , You ought to plan and attack in time. Discuss with team the reason ASAP")
+        except:
+            pass
+    
     @commands.command()
     @commands.has_any_role("Admin","C o м м a n d e r") 
     #@commands.is_owner()
