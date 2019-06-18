@@ -201,7 +201,7 @@ class Owner(commands.Cog):
         
         if message.author.bot:
             return
-        if message.channel.id == 586915160015503390:
+        if message.channel.id == 590236645442453544:
             if list(str(message.content).split())[0] not in ['eka','Eka','EKA']:
                 await message.delete()
                 await self.bot.get_channel(id=message.channel.id).send("Invalid BOT command. Type `eka help`")
