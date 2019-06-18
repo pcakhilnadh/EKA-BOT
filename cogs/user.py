@@ -27,7 +27,7 @@ class User(commands.Cog):
             )
         embed.set_image(url = user.avatar_url) 
         
-        await self.bot.get_channel(id=569086204621094912).send(embed=embed)
+        await self.bot.get_channel(id=590236645442453544).send(embed=embed)
         
         
 
