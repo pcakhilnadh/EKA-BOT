@@ -111,8 +111,8 @@ Server = {guild}
             await ctx.send(f"Bad arguments supplied.")
             await ctx.send_help(ctx.command)
         elif isinstance(error, commands.errors.NotOwner):
-            await ctx.send(f"This command is only for my master, !!!!")
-            await ctx.send((await self.bot.application_info()).owner)
+            await ctx.send(f"This command is only for Pc !!!!")
+            
         elif isinstance(error, discord.errors.Forbidden):
             await ctx.send("I don't have enough permsissions to do that!")
         elif isinstance(error, commands.errors.MissingPermissions):

@@ -235,6 +235,7 @@ class Helper(commands.Cog):
         # perms.attach_files = True
         # perms.add_reactions = True
         await ctx.author.send(f'<{discord.utils.oauth_url(self.bot.user.id, perms)}>')
+        await ctx.message.add_reactions("✅")
         
 
 

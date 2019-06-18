@@ -44,7 +44,7 @@ class EkaBot(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(command_prefix=get_prefix, description=description)
         
-        self.owner_id = [286367865462980608,409664906254876678,346223879485652992]
+        self.owner_id = 286367865462980608
         self.channel_id= [586915160015503390,590236645442453544,562537063052738569,588736568597151760]
         #bot_command, eka_bot,bot_test,votting_recruitment, longue
         self._task = self.loop.create_task(self.initialize())
