@@ -183,7 +183,7 @@ class Owner(commands.Cog):
                     GuildObj = self.bot.get_guild(561249245672374273)
                     roleObj = discord.utils.get(GuildObj.roles, name = "18+")
                     await memberObj.add_roles(roleObj)
-                    #await self.bot.get_channel(id=590236645442453544).send(f"{memberObj.mention} Reacted to get `18+` Role ")
+                    await self.bot.get_channel(id=573789844745224192).send(f"{memberObj.mention} Reacted to get `18+` Role ")
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
         
@@ -195,7 +195,7 @@ class Owner(commands.Cog):
                     GuildObj = self.bot.get_guild(561249245672374273)
                     roleObj = discord.utils.get(GuildObj.roles, name = "18+")
                     await memberObj.remove_roles(roleObj)
-                    #await self.bot.get_channel(id=590236645442453544).send(f"{memberObj.mention} Reacted to Remove `18+` Role ")
+                    await self.bot.get_channel(id=573789844745224192).send(f"{memberObj.mention} Reacted to Remove `18+` Role ")
     @commands.Cog.listener()
     async def on_message(self,message):
         
