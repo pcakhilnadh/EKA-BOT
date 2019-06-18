@@ -48,6 +48,7 @@ class Owner(commands.Cog):
             embed.add_field(name=f"Want to get GUEST role ?", value=f":sos: React with EKA logo in {about.mention} \n\n")
             #embed.set_image(url="attachment://recruitment.jpg")
             await welcomechannel.send(file=file,embed = embed)
+            await member.send(file=file, embed =embed)
         if member.guild.id == 586915159377707027: #Support Server
             welcomechannel = self.bot.get_channel(588632891710504960)
             embed = discord.Embed(title="**__WELCOME TO EKA BOT Support__**", colour=discord.Colour(0x673c27), description=f"Hello {member.mention} | {member.name}  You are {member.guild.member_count} th Member \n Greetings from EKA BOT Developers  ", timestamp=datetime.datetime.utcfromtimestamp(x))
