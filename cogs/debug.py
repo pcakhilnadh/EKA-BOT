@@ -111,7 +111,7 @@ Server = {guild}
             await ctx.send(f"Bad arguments supplied.")
             await ctx.send_help(ctx.command)
         elif isinstance(error, commands.errors.NotOwner):
-            await ctx.message.author.send(await bot.application_info())
+            await ctx.message.author.send(await self.bot.application_info())
 
             await ctx.send("This command is only for my master, Pc!!!!")
         elif isinstance(error, discord.errors.Forbidden):
