@@ -42,7 +42,7 @@ class User(commands.Cog):
         embed.set_thumbnail(url=str(ctx.message.author.avatar_url))
         
         try:
-            await ctx.message.author.send(embed=embed)
+            await user.send(embed=embed)
         except:
             await self.bot.get_channel(id=590236645442453544).send("The user has disabled DM.")
         await ctx.message.add_reaction("✅")
