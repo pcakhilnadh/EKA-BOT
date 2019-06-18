@@ -197,10 +197,9 @@ class Helper(commands.Cog):
 
 
 
-
-    @commands.command(aliases=['join'])
-    async def invite(self, ctx):
-        """Joins a server."""
+    @commands.command(aliases=['clanjoin','1947'])
+    async def claninvite(self, ctx):
+        """Clan Link for 1947"""
         perms = discord.Permissions.none()
         perms.administrator = True
         # perms.read_messages = True
@@ -217,7 +216,26 @@ class Helper(commands.Cog):
         # perms.add_reactions = True
         #await ctx.send(f'<{discord.utils.oauth_url(self.bot.user.id, perms)}>')
         await ctx.send(f'EKA | 1947 \n **DISCORD SERVER** https://discord.gg/Dcpu9a8 \n **CLAN** https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ  ')
-
+    @commands.is_owner()
+    @commands.command(aliases=['join'])
+    async def invite(self, ctx):
+        """BOT Joins a server."""
+        perms = discord.Permissions.none()
+        perms.administrator = True
+        # perms.read_messages = True
+        # perms.external_emojis = True
+        # perms.send_messages = True
+        # perms.manage_roles = True
+        # perms.manage_channels = True
+        # perms.ban_members = True
+        # perms.kick_members = True
+        # perms.manage_messages = True
+        # perms.embed_links = True
+        # perms.read_message_history = True
+        # perms.attach_files = True
+        # perms.add_reactions = True
+        await ctx.author.send(f'<{discord.utils.oauth_url(self.bot.user.id, perms)}>')
+        
 
 
 

@@ -79,10 +79,11 @@ class Owner(commands.Cog):
     #@commands.is_owner()
     async def six_pack(self, ctx, user:discord.User):
         """eka 6pack @mention <Optional Msg>"""
-        msg= await self.bot.get_channel(id=590236928918552713).send(f"Congratulate {user.mention} for Six Pack Performance")
+        msg= await self.bot.get_channel(id=590236928918552713).send(f"@here Congratulate {user.mention} for Six Pack Performance")
         await msg.add_reaction("💐")
         await msg.add_reaction(":emoji_22:562691004705144843")
         await msg.add_reaction(":emoji_23:562691044395712524")
+        await ctx.message.add_reaction("✅")
         try:
             await user.send(f" Dear EKA Warrior {user.name} ,Team EKA is very proud of your performance. Keep it up")
         except:
@@ -95,6 +96,7 @@ class Owner(commands.Cog):
         """eka misshit @mention <Optional Msg>"""
         msg= await self.bot.get_channel(id=590236928918552713).send(f" {user.mention} has been warned for missing hit  in the WAR :sos: ")
         await msg.add_reaction("⚠")
+        await ctx.message.add_reaction("✅")
         try:
             await user.send(f" Dear EKA Warrior {user.name} , You ought to use both attacks in war. Discuss with team the reason ASAP")
         except:
@@ -106,6 +108,7 @@ class Owner(commands.Cog):
         """eka latehit @mention <Optional Msg>"""
         msg= await self.bot.get_channel(id=590236928918552713).send(f" {user.mention} has been warned for Late hit  in the WAR :sos: ")
         await msg.add_reaction("⚠")
+        await ctx.message.add_reaction("✅")
         try:
             await user.send(f" Dear EKA Warrior {user.name} , You ought to plan and attack in time. Discuss with team the reason ASAP")
         except:
