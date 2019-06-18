@@ -39,7 +39,8 @@ class User(commands.Cog):
             description = msg,
             color = 0x98FB98
             )
-        embed.set_image(url = ctx.message.author.avatar_url) 
+        embed.set_thumbnail(url=str(ctx.message.author.avatar_url))
+        
         try:
             await ctx.message.author.send(embed=embed)
         except:
