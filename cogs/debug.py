@@ -80,11 +80,14 @@ Owner: {guild.owner} [{guild.owner.id}]"""
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
-        title = "Command invoked!"
-        guild = f"{ctx.guild.name}[{ctx.guild.id}]" if ctx.guild else "DMs"
-        description = f"""Command - `{ctx.message.content}`
-Server = {guild}
-"""
+        if ctx.args:
+            title = "Command invoked!"
+            guild = f"{ctx.guild.name}[{ctx.guild.id}]" if ctx.guild else "DMs"
+            description = f"""Command - `{ctx.message.content}`\n args-{ctx.args} \n Server = {guild}"""
+        else:
+            title = "Command invoked!"
+            guild = f"{ctx.guild.name}[{ctx.guild.id}]" if ctx.guild else "DMs"
+            description = f"""Command - `{ctx.message.content}` \n Server = {guild}"""
         avatar = ctx.author.avatar_url if ctx.author.avatar else ctx.author.default_avatar_url
         embed = discord.Embed(title=title, description=description, color=discord.Color.orange())
         embed.set_author(name=f"{ctx.author}", icon_url=avatar)
