@@ -80,9 +80,7 @@ class Owner(commands.Cog):
     async def six_pack(self, ctx, user:discord.User):
         """eka 6pack @mention <Optional Msg>"""
         msg= await self.bot.get_channel(id=590236928918552713).send(f"@here Congratulate {user.mention} for Six Pack Performance")
-        await msg.add_reaction("💐")
-        await msg.add_reaction(":emoji_22:562691004705144843")
-        await msg.add_reaction(":emoji_23:562691044395712524")
+        await msg.add_reaction("🍻")
         await ctx.message.add_reaction("✅")
         try:
             await user.send(f" Dear EKA Warrior {user.name} ,Team EKA is very proud of your performance. Keep it up")
