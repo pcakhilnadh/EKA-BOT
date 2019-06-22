@@ -5,4 +5,4 @@ async-timeout==3.0.1
 discord.py
 youtube_dl
 ffmpeg
-libopus
+git+https://github.com/dubsmash/heroku-buildpack-opus.git
