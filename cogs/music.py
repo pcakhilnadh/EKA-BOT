@@ -240,8 +240,8 @@ class Music(commands.Cog):
                 raise VoiceConnectionError(f'Moving to channel: <{channel}> timed out.')
         else:
             try:
-                if channel.id != 587203961665093633:
-                    await ctx.send(f'Cannot Connect to: **{channel}** . Use only play_music')
+                if channel.id not in [587203961665093633,562685766254460949,410111067658780672]:
+                    await ctx.send(f'Cannot Connect to: **{channel}** . Use only music voice channel')
                     return
 
                 await channel.connect()
