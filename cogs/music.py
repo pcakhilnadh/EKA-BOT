@@ -225,9 +225,10 @@ class Music(commands.Cog):
         if not channel:
             try:
                 channel = ctx.author.voice.channel
-            except AttributeError:
+            #except AttributeError:
+            except:
                 #raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
-                await ctx.send(f"No channel to join. Please either specify a valid channel or join one.")
+                await ctx.send(f" You have to join music channel first. Try again after you join.")
         vc = ctx.voice_client
 
         if vc:
@@ -266,14 +267,13 @@ class Music(commands.Cog):
 
         if not vc:
             await ctx.invoke(self.connect_)
-        else:
-            player = self.get_player(ctx)
+        
+        player = self.get_player(ctx)
 
         # If download is False, source will be a dict which will be used later to regather the stream.
         # If download is True, source will be a discord.FFmpegPCMAudio with a VolumeTransformer.
-            source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
-
-            await player.queue.put(source)
+        source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
+        await player.queue.put(source)
 
     @commands.command(name='pause')
     async def pause_(self, ctx):
