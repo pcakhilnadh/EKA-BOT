@@ -5,3 +5,4 @@ async-timeout==3.0.1
 discord.py
 youtube_dl
 ffmpeg
+opus
