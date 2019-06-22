@@ -228,7 +228,12 @@ class Music(commands.Cog):
             #except AttributeError:
             except:
                 #raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
-                await ctx.send(f" You have to join music channel first. Try again after you join.")
+                await ctx.send(f" You have to join music channel first. Try again after you join one.")
+                try:
+                    await ctx.author.send(f"Finding trouble ? \n Join EKA BOT Developer and Support Server if you need assistance \n https://discord.gg/jfcadBv")
+                except:
+                    pass
+            
         vc = ctx.voice_client
 
         if vc:
@@ -241,7 +246,7 @@ class Music(commands.Cog):
                 raise VoiceConnectionError(f'Moving to channel: <{channel}> timed out.')
         else:
             try:
-                if channel.id not in [587203961665093633,562685766254460949,410111067658780672]:
+                if channel.id not in [587203961665093633,562685766254460949,410111067658780672 ,481775606120448010,]:
                     await ctx.send(f'Cannot Connect to: **{channel}** . Use only music voice channel')
                     return
 
@@ -249,6 +254,9 @@ class Music(commands.Cog):
             except asyncio.TimeoutError:
                 #raise VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')
                 await ctx.send(f"Connecting to channel: <{channel}> timed out.")
+            except AttributeError:
+                # if channel name not specified exception in channel.id is handled
+                pass 
         await ctx.send(f'Connected to: **{channel}**')
 
     @commands.command(name='play', aliases=['sing'])
