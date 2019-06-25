@@ -280,8 +280,17 @@ class Music(commands.Cog):
 
         # If download is False, source will be a dict which will be used later to regather the stream.
         # If download is True, source will be a discord.FFmpegPCMAudio with a VolumeTransformer.
-        source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
-        await player.queue.put(source)
+        try :
+            source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
+            await player.queue.put(source)
+        except:
+            await ctx.send(f" There is an error. Music you have requested is not found or it may have copy right issues to play for free of cost.")
+        try:
+            await ctx.author.send(f" You have request a service that cost money. \n Please Donate and support EKA. EKA BOT Support Server if you need assistance \n https://discord.gg/jfcadBv")
+        except:
+            pass
+                    
+        
 
     @commands.command(name='pause')
     async def pause_(self, ctx):
