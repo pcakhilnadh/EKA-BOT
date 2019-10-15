@@ -40,7 +40,7 @@ class Owner(commands.Cog):
             about =self.bot.get_channel(567962887054950420)
             directory=os.getcwd()
             file = discord.File(os.path.join(directory+str('/')+"images/recruitment.jpg"),filename="recruitment.jpg")
-            embed = discord.Embed(title="**__WELCOME TO EKA__**", colour=discord.Colour(0x673c27), url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", description=f"Hello {member.name},  \n\n:point_right:Elite Kerala Alliance. \n:point_right: MLCW - GWL  clan.\n:point_right: WCL, EWL, NDL WELTER\n\n  ", timestamp=datetime.datetime.utcfromtimestamp(x))
+            embed = discord.Embed(title="**__WELCOME TO EKA__**", colour=discord.Colour(0x673c27), url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", description=f"Hello {member.name},  \n\n:point_right:Elite Kerala Alliance. \n:point_right: CWL CLAN.\n:point_right: CWL PREMIER, CWL PHEONIX, MLCW-GWL \n\n  ", timestamp=datetime.datetime.utcfromtimestamp(x))
             embed.set_thumbnail(url=str(member.avatar_url))
             embed.set_author(name="Elite Kerala Alliance ", url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
             embed.set_footer(text="Team EKA |", icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
@@ -79,7 +79,7 @@ class Owner(commands.Cog):
     #@commands.is_owner()
     async def six_pack(self, ctx, user:discord.User):
         """eka 6pack @mention <Optional Msg>"""
-        msg= await self.bot.get_channel(id=590236928918552713).send(f"@here Congratulate {user.mention} for Six Pack Performance")
+        msg= await self.bot.get_channel(id=590236928918552713).send(f" Congratulate {user.mention} for Six Pack Performance")
         await msg.add_reaction("🍻")
         await ctx.message.add_reaction("✅")
         try:
@@ -193,9 +193,9 @@ class Owner(commands.Cog):
                     if str(dislikeReactionObj.emoji) == str(payload.emoji):
                         await messageObj.remove_reaction(payload.emoji,memberObj)
             
-        if payload.channel_id == 590236645442453544:    
+        if payload.channel_id == 633715289309052942:    
             memberObj=self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
-            if payload.message_id == 590430176572342273:
+            if payload.message_id == 633725319207190548:
                 messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
                 if str(payload.emoji) == str("🔞"):
                     GuildObj = self.bot.get_guild(561249245672374273)
