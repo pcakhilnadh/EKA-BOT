@@ -205,9 +205,9 @@ class Owner(commands.Cog):
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
         
-        if payload.channel_id == 590236645442453544:    
+        if payload.channel_id == 633715289309052942:    
             memberObj=self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
-            if payload.message_id == 590430176572342273:
+            if payload.message_id == 633725319207190548:
                 messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
                 if str(payload.emoji) == str("🔞"):
                     GuildObj = self.bot.get_guild(561249245672374273)
