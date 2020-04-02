@@ -34,7 +34,7 @@ initial_extensions = (
     'cogs.debug',
     'cogs.user',
     'cogs.helper',
-    'cogs.music',
+    #'cogs.music',
     
 )
 
