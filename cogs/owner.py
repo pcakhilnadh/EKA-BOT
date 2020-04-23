@@ -118,10 +118,38 @@ class Owner(commands.Cog):
                     msg = await self.bot.get_channel(id=channels.id).send(
                         f"https://cdn.discordapp.com/attachments/701323612665151488/701323681619640400/new_war.jpg")
         await ctx.message.add_reaction("✅")
-        try:
-            await user.send(f" Dear EKA Warrior {user.name} ,Team EKA is very proud of your performance. Keep it up")
-        except:
-            pass
+
+    # RECRUITMENT
+
+    async def recruitment_log_generator(self, memberObj):
+        GuildObj = self.bot.get_guild(561249245672374273)
+        await self.bot.get_channel(id=590626344459698177).send(f'{GuildObj.get_role(563542082803728386)}')
+        x = time.time()
+        Categories = GuildObj.by_category()
+        for category in Categories:
+            CategoryInfo, Channels = category
+            if CategoryInfo.id == 579704405666824222:  # Recruitment Category 562541400542019584
+                overwrites = {GuildObj.default_role: discord.PermissionOverwrite(read_messages=False),
+                              GuildObj.get_role(563542082803728386): discord.PermissionOverwrite(read_messages=True),
+                              GuildObj.default_role: discord.PermissionOverwrite(read_messages=False),
+                              GuildObj.get_role(562541400542019584): discord.PermissionOverwrite(read_messages=True),
+                              memberObj: discord.PermissionOverwrite(read_messages=True, create_instant_invite=False)}
+                recruitmentchannel = await CategoryInfo.create_text_channel(f'Applicant-{memberObj.name}',
+                                                                            overwrites=overwrites)
+                await recruitmentchannel.send(f"RECRUITMENT : {memberObj.name} : {memberObj.id}")
+                embed = discord.Embed(colour=discord.Colour(0x673c27),
+                                      description=f"Hello {memberObj.name}, Please Post the following information in this channel  \n\n:point_right:ss of your base and Profile. \n:point_right: Tell the Strategies You use.\n:point_right: Previous Clans.\n:point_right: Reason to Join EKA\n:point_right: Actual Name and Age\n:point_right: Place and Timezone\n:point_right: Other COC accounts\n:point_right: Opinion about our server and EKA \n\n Tag a Recruiter afterwards. ",
+                                      timestamp=datetime.datetime.utcfromtimestamp(x))
+
+                embed.set_author(name="Elite Kerala Alliance - RECRUITMENT ",
+                                 url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ",
+                                 icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
+                embed.set_footer(text="Recruitment Team EKA |",
+                                 icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
+                message = await recruitmentchannel.send(content=f"{memberObj.mention}", embed=embed)
+                await message.add_reaction("⛔")
+                roleObj = discord.utils.get(GuildObj.roles, name="Applicant")
+                await memberObj.add_roles(roleObj)
 
     @commands.command(aliases=['misshit', 'hitmissed'])
     @commands.has_any_role("Admin", "C o м м a n d e r")
@@ -253,6 +281,12 @@ class Owner(commands.Cog):
                     await memberObj.add_roles(roleObj)
                     await self.bot.get_channel(id=573789844745224192).send(
                         f"{memberObj.mention} Reacted to get `18+` Role ")
+        if payload.channel_id == 702923115432378459:
+            memberObj = self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
+            messageObj = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
+            if payload.message_id == 702924182823895171:
+                await messageObj.remove_reaction(payload.emoji, memberObj)
+                await self.recruitment_log_generator(memberObj)
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
