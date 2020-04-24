@@ -123,19 +123,17 @@ class Owner(commands.Cog):
 
     async def recruitment_log_generator(self, memberObj):
         GuildObj = self.bot.get_guild(561249245672374273)
-        await self.bot.get_channel(id=590626344459698177).send(f'{GuildObj.get_role(563542082803728386)}')
         x = time.time()
         Categories = GuildObj.by_category()
         for category in Categories:
             CategoryInfo, Channels = category
             if CategoryInfo.id == 579704405666824222:  # Recruitment Category 562541400542019584
-                overwrites = {GuildObj.default_role: discord.PermissionOverwrite(read_messages=False),
-                              GuildObj.get_role(563542082803728386): discord.PermissionOverwrite(read_messages=True),
-                              GuildObj.default_role: discord.PermissionOverwrite(read_messages=False),
-                              GuildObj.get_role(562541400542019584): discord.PermissionOverwrite(read_messages=True),
-                              memberObj: discord.PermissionOverwrite(read_messages=True, create_instant_invite=False)}
+                permission = CategoryInfo.overwrites
+                permission[memberObj] = discord.PermissionOverwrite(read_messages=True, manage_channels=False,
+                                                                    add_reactions=False, read_message_history=True,
+                                                                    create_instant_invite=False)
                 recruitmentchannel = await CategoryInfo.create_text_channel(f'Applicant-{memberObj.name}',
-                                                                            overwrites=overwrites)
+                                                                            overwrites=permission)
                 await recruitmentchannel.send(f"RECRUITMENT : {memberObj.name} : {memberObj.id}")
                 embed = discord.Embed(colour=discord.Colour(0x673c27),
                                       description=f"Hello {memberObj.name}, Please Post the following information in this channel  \n\n:point_right:ss of your base and Profile. \n:point_right: Tell the Strategies You use.\n:point_right: Previous Clans.\n:point_right: Reason to Join EKA\n:point_right: Actual Name and Age\n:point_right: Place and Timezone\n:point_right: Other COC accounts\n:point_right: Opinion about our server and EKA \n\n Tag a Recruiter afterwards. ",
@@ -287,6 +285,63 @@ class Owner(commands.Cog):
             if payload.message_id == 702924182823895171:
                 await messageObj.remove_reaction(payload.emoji, memberObj)
                 await self.recruitment_log_generator(memberObj)
+
+        if self.bot.get_channel(payload.channel_id).category_id == 579704405666824222:
+            memberObj = self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
+            messageObj = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
+            if str(payload.emoji) == str("⛔"):
+                if (discord.utils.get(memberObj.roles, name='R e c r U ι т e r')):
+                    await messageObj.add_reaction("✅")
+                    await messageObj.add_reaction("❎")
+                    await messageObj.remove_reaction(payload.emoji, memberObj)
+                else:
+                    if memberObj.bot == False:
+                        await self.bot.get_channel(payload.channel_id).send(
+                            f"{memberObj.mention} Sorry, only a EKA recruiter is authorized to close application.")
+                        await messageObj.remove_reaction(payload.emoji, memberObj)
+
+            elif str(payload.emoji) == str("✅"):
+                if (discord.utils.get(memberObj.roles, name='R e c r U ι т e r')):
+                    permission = self.bot.get_channel(payload.channel_id).overwrites
+                    for k, v in permission.items():
+                        if k == self.bot.get_guild(payload.guild_id).default_role:
+                            continue
+                        permission[k] = discord.PermissionOverwrite(read_messages=True, manage_channels=False,
+                                                                    add_reactions=False, read_message_history=True,
+                                                                    create_instant_invite=False, send_messages=False)
+
+                    await self.bot.get_channel(payload.channel_id).edit(overwrites=permission)
+                    await messageObj.clear_reactions()
+                    embed = discord.Embed(colour=discord.Colour(0x673c27),
+                                          description=f"Hello {memberObj.name}, Please update the interview status   \n\n:one: Accepted for Tryout. \n:two: Rejected.\n\n ")
+                    embed.set_author(name="EKA - RECRUITMENT STATUS",
+                                     url="https://link.clashofclans.com/?action=OpenClanProfile&tag=RJ9JYYQQ",
+                                     icon_url="https://cdn.discordapp.com/attachments/562537063052738569/582847093434089472/eka.jpg")
+                    message = await self.bot.get_channel(payload.channel_id).send(
+                        content=f"{memberObj.mention} has closed this application", embed=embed)
+                    await message.add_reaction("1\N{variation selector-16}\N{combining enclosing keycap}")
+                    await message.add_reaction("2\N{variation selector-16}\N{combining enclosing keycap}")
+                    # roleObj = discord.utils.get(GuildObj.roles, name = "Applicant")
+                    # await memberObj.add_roles(roleObj)
+
+                else:
+                    if memberObj.bot == False:
+                        await self.bot.get_channel(payload.channel_id).send(
+                            f"{memberObj.mention} Sorry, only a EKA recruiter is authorized to close application.")
+                        await messageObj.remove_reaction(payload.emoji, memberObj)
+
+            elif str(payload.emoji) == str("❎"):
+                if (discord.utils.get(memberObj.roles, name='R e c r U ι т e r')):
+                    await messageObj.clear_reaction("❎")
+                    await messageObj.clear_reaction("✅")
+                else:
+                    if memberObj.bot == False:
+                        await self.bot.get_channel(payload.channel_id).send(
+                            f"{memberObj.mention} Sorry, only a EKA recruiter is authorized to close application.")
+                        await messageObj.remove_reaction(payload.emoji, memberObj)
+            else:
+                if memberObj.bot == False:
+                    await messageObj.remove_reaction(payload.emoji, memberObj)
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
