@@ -2,3 +2,6 @@
 
 #ENV
 EKA_env/
+
+#local_files
+test_bot.py
