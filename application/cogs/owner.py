@@ -425,7 +425,7 @@ class Owner(commands.Cog):
                     await applicantObj.add_roles(fieldMarshalRoleObj) 
                     await self.recruitment_log_maker(self.bot.get_channel(payload.channel_id),Emoji.NUMBER_ONE)
                     await self.bot.get_channel(payload.channel_id).delete()    
-                    await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(f" A new Recruit has been joined EKA, Please wish {applicantObj.mention} Goodluck !")
+                    await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(f"@everyone A new Recruit has been joined EKA for Tryouts, Please wish {applicantObj.mention} Goodluck !")
                     embed = discord.Embed(title = f"Congrats ! You are recruited",description = " You are selected for Tryouts in EKA. Goodluck",color = 0x98FB98)
                     embed.set_thumbnail(url=Guild1947Image.EKA_ICON_URL)
         
