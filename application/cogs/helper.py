@@ -1,10 +1,10 @@
 import discord
 from discord.ext import commands
-from cogs.utils.paginator import Pages
+from application.cogs.utils.paginator import Pages
 import itertools
 import asyncio
 from datetime import datetime
-
+from application.constants.emoji import Emoji
 
 
 
@@ -252,7 +252,7 @@ class Helper(commands.Cog):
         
 
         await ctx.author.send(f'<{discord.utils.oauth_url(self.bot.user.id, perms)}>')
-        await ctx.message.add_reaction("✅")
+        await ctx.message.add_reaction(Emoji.GREEN_TICK)
         
 
 

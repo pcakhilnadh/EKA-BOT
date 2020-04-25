@@ -4,17 +4,15 @@ from discord.ext import commands
 import asyncio
 import traceback
 from .utils.chat_formatting import pagify
+from application.constants.guildsupport import GuildSupport
+from application.constants.guild1947 import RolesGuild1947
 
+DEBUG_SERVER_ID = GuildSupport.SERVER_ID
+ERROR_LOGS_ID   = GuildSupport.ERROR_LOGS_CHANNEL_ID
+COMMANDS_DEBUG  = GuildSupport.DEBUG_CHANNEL_ID
+BOT_JOIN_ID      = GuildSupport.BOT_JOIN_LEAVE_GUILD_CHANNEL_ID
 
-DEBUG_SERVER_ID = 586915159377707027
-ERROR_LOGS_ID   = 586932176403169281
-COMMANDS_DEBUG  = 586932197752176651
-BOT_JOIN_ID      = 586986233289244692
-
-VC_CHANNELS = [
-    586915160015503392,     # Total Servers
-    586932359253983252      # Last Joined/Left Server
-]
+VC_CHANNELS = [GuildSupport.ON_SERVER_VC_CHANNEL_ID,GuildSupport.LAST_JOIN_VC_CHANNEL_ID]
 
 
 class Debug(commands.Cog):
@@ -116,7 +114,7 @@ Owner: {guild.owner} [{guild.owner.id}]"""
         elif isinstance(error, commands.errors.NotOwner):
             await ctx.send(f"This command is only for Pc !!!!")
             try:
-                await ctx.author.send(f"You have invoked a command not ment to be used \n Join EKA BOT Support Server if you need assistance \n https://discord.gg/jfcadBv")
+                await ctx.author.send(f"You have invoked a command not ment to be used \n Join EKA BOT Support Server if you need assistance \n {GuildSupport.SERVER_INVITE_URL}")
             except:
                 pass
             
@@ -127,7 +125,7 @@ Owner: {guild.owner} [{guild.owner.id}]"""
         elif isinstance(error, commands.errors.CommandOnCooldown):
             pass
         elif isinstance(error, commands.errors.MissingAnyRole):
-            await ctx.send(" Only C o м м a n d e r can use this command.")
+            await ctx.send(f" Only {RolesGuild1947.ADMIN_ROLE_NAME} can use this command.")
        
        
         else:

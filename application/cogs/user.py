@@ -11,6 +11,9 @@ import os
 from typing import Union
 import datetime
 import time
+from application.constants.guild1947 import *
+from application.constants.emoji import *
+
 class User(commands.Cog):
     """ EKA members will have all these fun """
     def __init__(self, bot):
@@ -27,8 +30,8 @@ class User(commands.Cog):
             )
         embed.set_image(url = user.avatar_url) 
         
-        await self.bot.get_channel(id=590236645442453544).send(embed=embed)
-        await ctx.message.add_reaction("✅")
+        await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(embed=embed)
+        await ctx.message.add_reaction(Emoji.GREEN_TICK)
 
     @commands.command(aliases=['Dm','dm','DM'])
     async def dm_user(self, ctx, user:discord.User,msg:str):
@@ -43,11 +46,11 @@ class User(commands.Cog):
         
         try:
             await user.send(embed=embed)
-            Msg=await self.bot.get_channel(id=590236645442453544).send(f"Hey {ctx.message.author}, Your message has been sent ```eka dm @mentionUser YourMessage``` to DM someone")
-            await Msg.add_reaction("✅")
+            Msg=await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Hey {ctx.message.author}, Your message has been sent ```eka dm @mentionUser YourMessage``` to DM someone")
+            await Msg.add_reaction(Emoji.GREEN_TICK)
         except:
-            Msg=await self.bot.get_channel(id=590236645442453544).send(f"Sorry {ctx.message.author}, The user has disabled DM. Your message could not be sent.```eka dm @mentionUser YourMessage``` to DM someone")
-            await Msg.add_reaction("❌")
+            Msg=await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Sorry {ctx.message.author}, The user has disabled DM. Your message could not be sent.```eka dm @mentionUser YourMessage``` to DM someone")
+            await Msg.add_reaction(Emoji.X)
         await ctx.message.delete()
 
         

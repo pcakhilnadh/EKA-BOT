@@ -1,7 +1,11 @@
 .DS_Store
+cogs/.DS_Store
+images/.DS_Store
 
 #ENV
 EKA_env/
 
+#IDE
+.idea/
 #local_files
 test_bot.py

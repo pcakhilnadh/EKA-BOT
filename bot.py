@@ -1,4 +1,3 @@
-
 __version__ = '0.0.1'
 __author__ = 'Pc'
 __description__ = 'A Discord Bot for Elite Kerala Alliance !'
@@ -10,18 +9,20 @@ import asyncio
 from discord.ext import commands
 from datetime import datetime
 import logging
-#userFunctions
-from cogs.utils import context
+# userFunctions
+from application.cogs.utils import context
+from application.constants.connection import DiscordConnection
+from application.constants.connection import GuildSupport
 import os
 
-description='A Discord Bot for Elite Kerala Alliance'
-OWNER = 286367865462980608
+description = 'A Discord Bot for Elite Kerala Alliance'
+OWNER = DiscordConnection.BOT_OWNER_ID
 
 
 def get_prefix(bot, message):
     """A callable Prefix for our bot. This could be edited to allow per server prefixes."""
 
-    prefixes = ['eka ', 'EKA ','Eka ']
+    prefixes = DiscordConnection.PREFIX
     if not message.guild:
         return 'eka'
     if message.author.id == OWNER:
@@ -29,28 +30,27 @@ def get_prefix(bot, message):
 
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
-initial_extensions = (
-    'cogs.owner',
-    'cogs.debug',
-    'cogs.user',
-    'cogs.helper',
-    #'cogs.music',
-    
-)
 
+initial_extensions = (
+    'application.cogs.owner',
+    'application.cogs.debug',
+    'application.cogs.user',
+    'application.cogs.helper',
+    # 'cogs.music',
+
+)
 
 
 class EkaBot(commands.AutoShardedBot):
 
     def __init__(self):
         super().__init__(command_prefix=get_prefix, description=description)
-        
-        self.owner_id = 286367865462980608
-        self.channel_id= [586915160015503390,590236645442453544,562537063052738569,588736568597151760,590626344459698177,381963689470984203,591984765872111636]
-        #bot_command, eka_bot,bot_test,votting_recruitment, longue
+
+        self.owner_id = DiscordConnection.BOT_OWNER_ID
+        self.channel_id = DiscordConnection.ALLOWED_CHANNELS
         self._task = self.loop.create_task(self.initialize())
         # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
-        self.activity = discord.Activity(type=discord.ActivityType.listening,name='Pc')
+        self.activity = discord.Activity(type=discord.ActivityType.listening, name='Pc')
         for extension in initial_extensions:
             try:
                 self.load_extension(extension)
@@ -58,20 +58,17 @@ class EkaBot(commands.AutoShardedBot):
                 print(f'Failed to load extension {extension}.', file=sys.stderr)
                 traceback.print_exc()
 
-        
-
     async def initialize(self):
         self.session = aiohttp.ClientSession(loop=self.loop)
         await self.wait_until_ready()
         self.owner = self.get_user(OWNER)
-
 
     async def process_commands(self, message):
         ctx = await self.get_context(message, cls=context.Context)
         if ctx.command is None:
             return
         if message.channel.id not in self.channel_id:
-            #await message.channel.send("Bot commands don't work in this channel")
+            # await message.channel.send("Bot commands don't work in this channel")
             return
         '''
         if message.author.id :
@@ -92,15 +89,13 @@ class EkaBot(commands.AutoShardedBot):
         '''
         await self.invoke(ctx)
 
-
     async def on_message(self, message):
         if message.author.bot:
             return
         await self.process_commands(message)
 
-
     async def on_ready(self):
-        bot_online_channel_id = 586993318035062785
+        bot_online_channel_id = GuildSupport.BOT_STATUS_CHANNEL_ID
         total_width = 0
         infos = (
             'EKA Bot',
@@ -115,7 +110,7 @@ class EkaBot(commands.AutoShardedBot):
             if width > total_width:
                 total_width = width
 
-        sep = '+'.join('-' * int((total_width/2)+1))
+        sep = '+'.join('-' * int((total_width / 2) + 1))
         sep = f'+{sep}+'
 
         information = [sep]
@@ -125,29 +120,26 @@ class EkaBot(commands.AutoShardedBot):
         information.append(sep)
         bot_online_channel = super().get_channel(bot_online_channel_id)
         title = " BOT Online Status"
-        description= "\n".join(information)
+        description = "\n".join(information)
         embed = discord.Embed(title=title,
                               description=description,
                               color=discord.Color.green())
         await bot_online_channel.send(embed=embed)
 
-        
         # print(f'\n\nLogged in as: {self.user.name} - {self.user.id}\nVersion: {discord.__version__}\n\n'
         #       f'Guilds: {len(self.guilds)}\nUsers: {len(self.users)}\n'
         #       f'Shards: {self.shard_count}\n\n')
 
         print(f'Successfully logged in and booted...!')
 
-
     async def on_resumed(self):
         print('resumed...')
-
 
     async def close(self):
         bot_online_channel_id = 586993318035062785
         bot_online_channel = super().get_channel(bot_online_channel_id)
         title = " BOT Online Status"
-        description= "\n BOT is offline"
+        description = "\n BOT is offline"
         embed = discord.Embed(title=title,
                               description=description,
                               color=discord.Color.red())
@@ -156,14 +148,15 @@ class EkaBot(commands.AutoShardedBot):
         await super().close()
         await self.session.close()
         self._task.cancel()
-    
 
     def run(self):
         try:
+            # super().run(os.environ.get('TOKEN'), bot=True, reconnect=True)
             super().run(os.environ.get('TOKEN'), bot=True, reconnect=True)
         except Exception as e:
             print(f'Troubles running the bot!\nError: {e}')
             # traceback.print_exc()
+
 
 def main():
     bot = EkaBot()

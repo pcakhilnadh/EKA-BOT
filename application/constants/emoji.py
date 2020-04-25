@@ -1,0 +1,12 @@
+class Emoji():
+    GREEN_TICK = "✅"
+    GREEN_CROSS = "❎"
+    CELEBRATION_BEER = "🍻"
+    WARNING = "⚠"
+    THUMPS_UP = "\U0001f44d"
+    THUMPS_DOWN = "\U0001f44e"
+    NO_ENTRY = "⛔"
+    UNDER_AGE ="🔞"
+    NUMBER_ONE ="1\N{variation selector-16}\N{combining enclosing keycap}"
+    NUMBER_TWO ="2\N{variation selector-16}\N{combining enclosing keycap}"
+    X ="❌"
