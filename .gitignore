@@ -13,4 +13,4 @@ __pycache__/
 
 #local_files
 test_bot.py
-application/constants/config.py
+#application/constants/config.py
