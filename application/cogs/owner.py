@@ -18,12 +18,13 @@ from collections import Counter
 from application.constants.guildsupport import *
 from application.constants.guild1947 import *
 from application.constants.emoji import *
-from application.constants.connection import *
+from application.constants.config import *
 class Owner(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
         self.sessions = set()
+        
 
     @commands.command()
     @commands.is_owner()
@@ -235,13 +236,10 @@ class Owner(commands.Cog):
     async def test_command(self, ctx):
         """eka misshit @mention <Optional Msg>"""
         
-        ALLOWED_CHANNELS  = [586932197752176651,586986233289244692]
-        for id in ALLOWED_CHANNELS:
-            channel =self.bot.get_channel(id)
-            try:
-                await self.bot.get_channel(id=Guild1947.BOT_TESTING_CHANNEL_ID).send(f" {channel.name}")
-            except:
-                pass
+        try:
+            await self.bot.get_channel(id=GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f" {self.bot.tester},{self.bot.testmodule.insert_into_db()}")
+        except:
+            pass
     @commands.command(aliases=['latehit','lateattack'])
     @commands.has_any_role(RolesGuildSupport.ADMIN_ROLE_NAME, RolesGuild1947.ADMIN_ROLE_NAME) 
     #@commands.is_owner()
@@ -425,7 +423,7 @@ class Owner(commands.Cog):
                     await applicantObj.add_roles(fieldMarshalRoleObj) 
                     await self.recruitment_log_maker(self.bot.get_channel(payload.channel_id),Emoji.NUMBER_ONE)
                     await self.bot.get_channel(payload.channel_id).delete()    
-                    await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(f"@everyone A new Recruit has been joined EKA for Tryouts, Please wish {applicantObj.mention} Goodluck !")
+                    await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(f" A new Recruit has been joined EKA, Please wish {applicantObj.mention} Goodluck !")
                     embed = discord.Embed(title = f"Congrats ! You are recruited",description = " You are selected for Tryouts in EKA. Goodluck",color = 0x98FB98)
                     embed.set_thumbnail(url=Guild1947Image.EKA_ICON_URL)
         

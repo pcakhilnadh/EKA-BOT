@@ -1,167 +1,52 @@
-__version__ = '0.0.1'
-__author__ = 'Pc'
-__description__ = 'A Discord Bot for Elite Kerala Alliance !'
-
-import discord
-import sys, traceback
-import aiohttp
-import asyncio
-from discord.ext import commands
-from datetime import datetime
+import psycopg2
 import logging
-# userFunctions
-from application.cogs.utils import context
-from application.constants.connection import DiscordConnection
-from application.constants.connection import GuildSupport
-import os
-
-description = 'A Discord Bot for Elite Kerala Alliance'
-OWNER = DiscordConnection.BOT_OWNER_ID
+import sys
 
 
-def get_prefix(bot, message):
-    """A callable Prefix for our bot. This could be edited to allow per server prefixes."""
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-    prefixes = DiscordConnection.PREFIX
-    if not message.guild:
-        return 'eka'
-    if message.author.id == OWNER:
-        prefixes.append('')
+#from application.utlis.db_utlis import PostgreDB_Utils
+from application.constants.config import PostgreeDB_Config
+from application.utlis.db_utlis import PostgreDB_Utils
+from app_driver import EkaBot
 
-    return commands.when_mentioned_or(*prefixes)(bot, message)
-
-
-initial_extensions = (
-    'application.cogs.owner',
-    'application.cogs.debug',
-    'application.cogs.user',
-    'application.cogs.helper',
-    # 'cogs.music',
-
-)
-
-
-class EkaBot(commands.AutoShardedBot):
-
+class EkaBOTApp():
     def __init__(self):
-        super().__init__(command_prefix=get_prefix, description=description)
+        self.sql_session = None
 
-        self.owner_id = DiscordConnection.BOT_OWNER_ID
-        self.channel_id = DiscordConnection.ALLOWED_CHANNELS
-        self._task = self.loop.create_task(self.initialize())
-        # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
-        self.activity = discord.Activity(type=discord.ActivityType.listening, name='Pc')
-        for extension in initial_extensions:
-            try:
-                self.load_extension(extension)
-            except:
-                print(f'Failed to load extension {extension}.', file=sys.stderr)
-                traceback.print_exc()
-
-    async def initialize(self):
-        self.session = aiohttp.ClientSession(loop=self.loop)
-        await self.wait_until_ready()
-        self.owner = self.get_user(OWNER)
-
-    async def process_commands(self, message):
-        ctx = await self.get_context(message, cls=context.Context)
-        if ctx.command is None:
-            return
-        if message.channel.id not in self.channel_id:
-            # await message.channel.send("Bot commands don't work in this channel")
-            return
-        '''
-        if message.author.id :
-            if message.author.id in self.owner_id:
-                await self.invoke(ctx)
-                return
-            if message.author.bot:
-                return
-            flag=0
-            for r in message.author.roles:
-                if r.name =='C o м м a n d e r':
-                    flag=1
-            if flag==1:
-                await self.invoke(ctx)
-            else:
-                await message.channel.send(f"Only C o м м a n d e r can use EKA BOT")
-            return
-        '''
-        await self.invoke(ctx)
-
-    async def on_message(self, message):
-        if message.author.bot:
-            return
-        await self.process_commands(message)
-
-    async def on_ready(self):
-        bot_online_channel_id = GuildSupport.BOT_STATUS_CHANNEL_ID
-        total_width = 0
-        infos = (
-            'EKA Bot',
-            f'{self.user.name} [{self.user.id}]',
-            f'Discord: {discord.__version__}',
-            f'Guilds: {len(self.guilds)}',
-            f'Users: {len(self.users)}',
-            f'Shards: {self.shard_count}'
-        )
-        for info in infos:
-            width = len(str(info)) + 4
-            if width > total_width:
-                total_width = width
-
-        sep = '+'.join('-' * int((total_width / 2) + 1))
-        sep = f'+{sep}+'
-
-        information = [sep]
-        for info in infos:
-            elem = f'|{info:^{total_width}}|'
-            information.append(elem)
-        information.append(sep)
-        bot_online_channel = super().get_channel(bot_online_channel_id)
-        title = " BOT Online Status"
-        description = "\n".join(information)
-        embed = discord.Embed(title=title,
-                              description=description,
-                              color=discord.Color.green())
-        await bot_online_channel.send(embed=embed)
-
-        # print(f'\n\nLogged in as: {self.user.name} - {self.user.id}\nVersion: {discord.__version__}\n\n'
-        #       f'Guilds: {len(self.guilds)}\nUsers: {len(self.users)}\n'
-        #       f'Shards: {self.shard_count}\n\n')
-
-        print(f'Successfully logged in and booted...!')
-
-    async def on_resumed(self):
-        print('resumed...')
-
-    async def close(self):
-        bot_online_channel_id = 586993318035062785
-        bot_online_channel = super().get_channel(bot_online_channel_id)
-        title = " BOT Online Status"
-        description = "\n BOT is offline"
-        embed = discord.Embed(title=title,
-                              description=description,
-                              color=discord.Color.red())
-        await bot_online_channel.send(embed=embed)
-        print(f'BOT is offline')
-        await super().close()
-        await self.session.close()
-        self._task.cancel()
-
-    def run(self):
+    def create_session(self):
         try:
-            # super().run(os.environ.get('TOKEN'), bot=True, reconnect=True)
-            super().run(os.environ.get('TOKEN'), bot=True, reconnect=True)
-        except Exception as e:
-            print(f'Troubles running the bot!\nError: {e}')
-            # traceback.print_exc()
+            if self.sql_session is None:
+                engine = create_engine(PostgreeDB_Config.URI, echo=False)
+                Session = sessionmaker(bind=engine)
+                self.sql_session = Session()
+        except Exception as dbEx:
+            logging.error("Error creating database connection :-  {} ".format(dbEx))
+            sys.exit(-1)
+
+    def close_session(self):
+        if self.sql_session is not None:
+            self.sql_session.close()
+
+    def execute(self):
+        try:
+            self.create_session()
+            db_utlis = PostgreDB_Utils(PostgreeDB_Config.URI,PostgreeDB_Config.DB,self.sql_session)
+            #print(db_utlis.insert_into_db())
+            eka_bot_driver = EkaBot(db_utlis)
+            eka_bot_driver.run()
+
+        except Exception as Ex:
+            logging.error("Exception : {}".format(Ex))
+        
+        finally:
+            self.close_session()
 
 
-def main():
-    bot = EkaBot()
-    bot.run()
+if __name__ == "__main__":
+    
+    #db_utlis = PostgreDB_Utils(PostgreeDB_Config.HOST,PostgreeDB_Config.USER,PostgreeDB_Config.PASSWORD,PostgreeDB_Config.DB)
 
-
-if __name__ == '__main__':
-    main()
+    Eka_Bot = EkaBOTApp()
+    Eka_Bot.execute()

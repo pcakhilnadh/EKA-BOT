@@ -4,8 +4,13 @@ images/.DS_Store
 
 #ENV
 EKA_env/
+DB_Dir/ 
 
 #IDE
 .idea/
+__pycache__/
+
+
 #local_files
 test_bot.py
+application/constants/config.py
