@@ -10,6 +10,7 @@ from contextlib import redirect_stdout
 import io
 import os
 import copy
+import logging
 from typing import Union
 # to expose to the eval command
 import datetime
@@ -19,6 +20,10 @@ from application.constants.guildsupport import *
 from application.constants.guild1947 import *
 from application.constants.emoji import *
 from application.constants.config import *
+from application.models.member_model import MemberModel 
+from application.utlis.discordGuild import Guild
+
+
 class Owner(commands.Cog):
 
     def __init__(self, bot):
@@ -235,11 +240,9 @@ class Owner(commands.Cog):
     @commands.is_owner()
     async def test_command(self, ctx):
         """eka misshit @mention <Optional Msg>"""
-        
-        try:
-            await self.bot.get_channel(id=GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f" {self.bot.tester},{self.bot.testmodule.insert_into_db()}")
-        except:
-            pass
+        r=self.bot.db_utlis.fetch_last_run_from_command_on_guild(GuildSupport.SERVER_ID)
+        await self.bot.get_channel(GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f"---->{r} {type(r)}")
+    
     @commands.command(aliases=['latehit','lateattack'])
     @commands.has_any_role(RolesGuildSupport.ADMIN_ROLE_NAME, RolesGuild1947.ADMIN_ROLE_NAME) 
     #@commands.is_owner()

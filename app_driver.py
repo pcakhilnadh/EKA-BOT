@@ -10,6 +10,7 @@ from discord.ext import commands
 from datetime import datetime
 import logging
 # userFunctions
+from application.utlis.on_ready import OnReady
 from application.cogs.utils import context
 from application.constants.config import DiscordConfig
 from application.constants.config import GuildSupport
@@ -50,7 +51,7 @@ class EkaBot(commands.AutoShardedBot):
         self.channel_id = DiscordConfig.ALLOWED_CHANNELS
         self.guild_id = DiscordConfig.ALLOWED_GUILDS
         self._task = self.loop.create_task(self.initialize())
-        self.testmodule = db_utlis
+        self.db_utlis = db_utlis
         self.tester = " Im a tester"
         # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
         self.activity = discord.Activity(type=discord.ActivityType.listening, name='Pc')
@@ -100,43 +101,10 @@ class EkaBot(commands.AutoShardedBot):
         await self.process_commands(message)
 
     async def on_ready(self):
-        bot_online_channel_id = GuildSupport.BOT_STATUS_CHANNEL_ID
-        total_width = 0
-        infos = (
-            'EKA Bot',
-            f'{self.user.name} [{self.user.id}]',
-            f'Discord: {discord.__version__}',
-            f'Guilds: {len(self.guilds)}',
-            f'Users: {len(self.users)}',
-            f'Shards: {self.shard_count}'
-        )
-        for info in infos:
-            width = len(str(info)) + 4
-            if width > total_width:
-                total_width = width
-
-        sep = '+'.join('-' * int((total_width / 2) + 1))
-        sep = f'+{sep}+'
-
-        information = [sep]
-        for info in infos:
-            elem = f'|{info:^{total_width}}|'
-            information.append(elem)
-        information.append(sep)
-        bot_online_channel = super().get_channel(bot_online_channel_id)
-        title = " BOT Online Status"
-        description = "\n".join(information)
-        embed = discord.Embed(title=title,
-                              description=description,
-                              color=discord.Color.green())
-        await bot_online_channel.send(embed=embed)
-
-        # print(f'\n\nLogged in as: {self.user.name} - {self.user.id}\nVersion: {discord.__version__}\n\n'
-        #       f'Guilds: {len(self.guilds)}\nUsers: {len(self.users)}\n'
-        #       f'Shards: {self.shard_count}\n\n')
-
-        print(f'Successfully logged in and booted...!')
-
+        on_ready_obj = OnReady(super(),self.db_utlis)
+        await on_ready_obj.print_msg()
+        await on_ready_obj.run_tasks()
+        print(f'Ready...!')
     async def on_resumed(self):
         print('resumed...')
 

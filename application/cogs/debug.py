@@ -97,63 +97,62 @@ Owner: {guild.owner} [{guild.owner.id}]"""
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.errors.CommandNotFound):
-            await ctx.send("That command doesn't exist.")
-        elif isinstance(error, commands.NoPrivateMessage):
-            await ctx.send('This command cannot be used in private messages.')
-        elif isinstance(error, commands.errors.TooManyArguments):
-            await ctx.send(error)
-        elif isinstance(error, commands.DisabledCommand):
-            await ctx.send('Sorry. This command is disabled and cannot be used.')
-        elif isinstance(error, commands.errors.MissingRequiredArgument):
-            await ctx.send(f"Not enough arguments supplied.")
-            await ctx.send_help(ctx.command)
-        elif isinstance(error, commands.errors.BadArgument):
-            await ctx.send(f"Bad arguments supplied.")
-            await ctx.send_help(ctx.command)
-        elif isinstance(error, commands.errors.NotOwner):
-            await ctx.send(f"This command is only for Pc !!!!")
-            try:
-                await ctx.author.send(f"You have invoked a command not ment to be used \n Join EKA BOT Support Server if you need assistance \n {GuildSupport.SERVER_INVITE_URL}")
-            except:
+        try:
+            if isinstance(error, commands.errors.CommandNotFound):
+                await ctx.send("That command doesn't exist.")
+            elif isinstance(error, commands.NoPrivateMessage):
+                await ctx.send('This command cannot be used in private messages.')
+            elif isinstance(error, commands.errors.TooManyArguments):
+                await ctx.send(error)
+            elif isinstance(error, commands.DisabledCommand):
+                await ctx.send('Sorry. This command is disabled and cannot be used.')
+            elif isinstance(error, commands.errors.MissingRequiredArgument):
+                await ctx.send(f"Not enough arguments supplied.")
+                await ctx.send_help(ctx.command)
+            elif isinstance(error, commands.errors.BadArgument):
+                await ctx.send(f"Bad arguments supplied.")
+                await ctx.send_help(ctx.command)
+            elif isinstance(error, commands.errors.NotOwner):
+                await ctx.send(f"This command is only for Pc !!!!")
+                try:
+                    await ctx.author.send(f"You have invoked a command not ment to be used \n Join EKA BOT Support Server if you need assistance \n {GuildSupport.SERVER_INVITE_URL}")
+                except:
+                    pass
+                
+            elif isinstance(error, discord.errors.Forbidden):
+                await ctx.send("I don't have enough permsissions to do that!")
+            elif isinstance(error, commands.errors.MissingPermissions):
+                await ctx.send("You don't have enough permissions to use this command!")
+            elif isinstance(error, commands.errors.CommandOnCooldown):
                 pass
-            
-        elif isinstance(error, discord.errors.Forbidden):
-            await ctx.send("I don't have enough permsissions to do that!")
-        elif isinstance(error, commands.errors.MissingPermissions):
-            await ctx.send("You don't have enough permissions to use this command!")
-        elif isinstance(error, commands.errors.CommandOnCooldown):
+            elif isinstance(error, commands.errors.MissingAnyRole):
+                await ctx.send(f" Only {RolesGuild1947.ADMIN_ROLE_NAME} can use this command.")
+        
+        
+            else:
+                try:
+                    invite = await ctx.channel.create_invite(max_uses=1)
+                    invite = invite.url
+                except:
+                    invite = "Couldn't create an invite"
+
+                log = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+
+                #description = f"```py\n{log}\n```"
+                embed = discord.Embed(title="An error occured",
+                                    #description=description,
+                                    color=discord.Color.orange())
+                field = f"""Command: `{ctx.message.content}`Author: {ctx.author}[{ctx.author.id}]Server: {ctx.guild.name}[{ctx.guild.id}]Server Invite: {invite}"""
+
+                for page in pagify(log, page_length=1024):
+                    embed.add_field(name='\u200b',
+                                    value=f'```py\n{page}\n```')
+                embed.add_field(name="Information", value=field)
+                
+                await self.error_logs.send(embed=embed)
+                raise error
+        except:
             pass
-        elif isinstance(error, commands.errors.MissingAnyRole):
-            await ctx.send(f" Only {RolesGuild1947.ADMIN_ROLE_NAME} can use this command.")
-       
-       
-        else:
-            try:
-                invite = await ctx.channel.create_invite(max_uses=1)
-                invite = invite.url
-            except:
-                invite = "Couldn't create an invite"
-
-            log = "".join(traceback.format_exception(type(error), error, error.__traceback__))
-
-            #description = f"```py\n{log}\n```"
-            embed = discord.Embed(title="An error occured",
-                                  #description=description,
-                                  color=discord.Color.orange())
-            field = f"""Command: `{ctx.message.content}`
-Author: {ctx.author}[{ctx.author.id}]
-Server: {ctx.guild.name}[{ctx.guild.id}]
-Server Invite: {invite}
-"""
-
-            for page in pagify(log, page_length=1024):
-                embed.add_field(name='\u200b',
-                                value=f'```py\n{page}\n```')
-            embed.add_field(name="Information", value=field)
-            await self.error_logs.send(embed=embed)
-            raise error
-
 
 def setup(bot):
     n = Debug(bot)
