@@ -72,7 +72,7 @@ class User(commands.Cog):
 
     @commands.command(aliases=['update_birthday','Update_birthday','Update_bday'])
     async def update_bday(self, ctx, message:str):
-        """--> `eka add_bday dd-mm-yyy `"""
+        """--> `eka update_bday dd-mm-yyy `"""
         if message is None:
             await self.bot.get_channel(id=GuildSupport.BOT_COMMANDS_CHANNEL_ID).send("Oh ! You forget to give me a date in DD-MM-YYYY format")
         try:
