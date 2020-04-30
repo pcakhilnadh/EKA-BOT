@@ -27,11 +27,15 @@ class LoopTaks(commands.Cog):
         user_id = self.db_utlis.users_has_bday_on_date(today)
         if user_id:
             for uid in user_id:
-                await self.wish_birthday(self.bot.get_user(uid))
+                userObj=self.bot.get_user(uid)
+                if userObj:
+                    await self.wish_birthday(userObj)
         
     async def wish_birthday(self,user_obj):
         birthday_wishes = f" Wish {user_obj.mention}, Happy Birthday !"
-        msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes)
+        embed = discord.Embed(title = f"Happy Birthday : {user_obj.name}",color = 0x98FB98)
+        embed.set_image(url = user_obj.avatar_url)
+        msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes,embed=embed)
         await msg.add_reaction(Emoji.BIRTHDAY)
 
     @tasks.loop(hours=8.0)

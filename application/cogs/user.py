@@ -58,7 +58,7 @@ class User(commands.Cog):
     async def add_bday(self, ctx, message:str):
         """--> `eka add_bday dd-mm-yyy `"""
         if message is None:
-            await self.bot.get_channel(id=GuildSupport.BOT_COMMANDS_CHANNEL_ID).send("Oh ! You forget to give me a date in DD-MM-YYYY format")
+            await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send("Oh ! You forget to give me a date in DD-MM-YYYY format")
         try:
             msg = message.strip()
             dob = datetime.strptime(msg, "%d-%m-%Y")
@@ -68,13 +68,13 @@ class User(commands.Cog):
                 await ctx.message.add_reaction(Emoji.X)
 
         except Exception as ex:
-            await self.bot.get_channel(id=GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f"Oh ! Provide date in YYYY-MM-DD format only {ex}")
+            await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Oh ! Provide date in YYYY-MM-DD format only {ex}")
 
     @commands.command(aliases=['update_birthday','Update_birthday','Update_bday'])
     async def update_bday(self, ctx, message:str):
         """--> `eka update_bday dd-mm-yyy `"""
         if message is None:
-            await self.bot.get_channel(id=GuildSupport.BOT_COMMANDS_CHANNEL_ID).send("Oh ! You forget to give me a date in DD-MM-YYYY format")
+            await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send("Oh ! You forget to give me a date in DD-MM-YYYY format")
         try:
             msg = message.strip()
             dob = datetime.strptime(msg, "%d-%m-%Y")
@@ -84,7 +84,7 @@ class User(commands.Cog):
                 await ctx.message.add_reaction(Emoji.X)
 
         except Exception as ex:
-            await self.bot.get_channel(id=GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f"Oh ! Provide date in YYYY-MM-DD format only {ex}")
+            await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Oh ! Provide date in YYYY-MM-DD format only {ex}")
         
 
         
