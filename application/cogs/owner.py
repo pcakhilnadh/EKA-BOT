@@ -557,7 +557,7 @@ class Owner(commands.Cog):
         if message.channel.id == Guild1947.EKA_BOT_CHANNEL_ID:
             if list(str(message.content).split())[0] not in DiscordConfig.PREFIX:
                 await message.delete()
-                await self.bot.get_channel(id=message.channel.id).send(content="Invalid BOT command.  ```eka help``` If you are looking for BOT commands. Pls use loungue to chat. Thanks",delete_after=20)
+                await self.bot.get_channel(id=message.channel.id).send(content="Invalid BOT command.  ```eka help``` If you are looking for BOT commands. Pls use loungue to chat. Thanks",delete_after=90)
         if message.channel.id == Guild1947.OPT_INT_OUT_CHANNEL_ID:
             await message.add_reaction(Emoji.NO_ENTRY)
             await message.add_reaction(Emoji.X)

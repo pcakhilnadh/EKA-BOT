@@ -38,15 +38,17 @@ class LoopTaks(commands.Cog):
         msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes,embed=embed)
         await msg.add_reaction(Emoji.BIRTHDAY)
 
-    @tasks.loop(hours=8.0)
+    @tasks.loop(hours=6)
     async def periodic_check(self):
         try:
             last_run = await self.db_utlis.fetch_last_run_from_command_on_guild(Guild1947.SERVER_ID)
             now_time = datetime.utcnow()
-            time_diiference_in_sec = now_time - last_run
-            if time_diiference_in_sec.days >0  :
+            time_diiference = now_time - last_run
+            print("time {}--{}--{} ".format(last_run,now_time,time_diiference.days))
+            if time_diiference.days >0  :
                 await self.birthday_checker()
         except Exception as Ex:
+            print(Ex)
             logging.error("ERROR in on_loop.py : periodic_check () : {}".format(Ex))
 
     
