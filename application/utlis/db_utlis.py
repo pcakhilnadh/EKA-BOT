@@ -1,6 +1,6 @@
 import logging
 import asyncio
-from sqlalchemy import and_
+from sqlalchemy import and_,desc
 
 from application.config.db_connection import PostgreDBConnector
 from application.models.member_model import MemberModel 
@@ -53,7 +53,7 @@ class PostgreDB_Utils:
                     self.sql_session.commit()
                     return True
                 else:
-                    return False
+                    return fetch.dob
             
         except Exception as Ex:
             logging.error(" Error in update_member_table : {}".format(Ex))
@@ -89,6 +89,17 @@ class PostgreDB_Utils:
                 for row in result: 
                     user_id.append(row.member_id)
                 return user_id
-        except:
+        except Exception as Ex:
             logging.error(" Error in users_has_bday_on_date : {}".format(Ex))
+            return None
+    def fetch_bday(self):
+        try:
+            result =self.sql_session.query(MemberModel).filter(MemberModel.dob.isnot(None)).order_by(desc(MemberModel.dob)).all()
+            if result:
+                return result
+            else:
+                return False
+                    
+        except Exception as Ex:
+            logging.error(" db_utlis.py : fetch_bday : {}".format(Ex))
             return None

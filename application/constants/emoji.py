@@ -19,3 +19,6 @@ class Emoji():
     NUMBER_NINE ="9\N{variation selector-16}\N{combining enclosing keycap}"
     X ="❌"
     SOS ="🆘"
+    TH13 = "<:th13:701277080373035038>"
+    TH12 = "<:T12:577555801053462528>"
+    TH11 = "<:T11:577555802404159499>"

@@ -22,7 +22,8 @@ from application.constants.emoji import *
 from application.constants.config import *
 from application.models.member_model import MemberModel 
 from application.utlis.discordGuild import Guild
-
+from application.constants.config import DiscordConfig
+from application.cogs.utils.paginator import TextPages
 
 class Owner(commands.Cog):
 
@@ -272,6 +273,7 @@ class Owner(commands.Cog):
         await msg.add_reaction(Emoji.NO_ENTRY)
         await self.bot.get_channel(id=Guild1947.ADMIN_TALK_CHANNEL_ID).send(f"@everyone Voting for evaluvating war performance of {user.name} has started. Cast your votes {chId.mention}")
         await ctx.message.add_reaction(Emoji.GREEN_TICK)
+
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):
         if payload.channel_id == Guild1947.VOTING_FOR_RECRUIT_CHANNEL_ID:
@@ -470,7 +472,71 @@ class Owner(commands.Cog):
             else:
                 if memberObj.bot==False:
                     await messageObj.remove_reaction(payload.emoji,memberObj)
+        if payload.channel_id == Guild1947.OPT_INT_OUT_CHANNEL_ID:
             
+            memberObj=self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
+            messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
+            permission_error_msg = f"{memberObj.mention}Sorry, Only 'ROSTER COLONAL' can close the roster opt-in-out"
+            if str(payload.emoji) not in [str(Emoji.TH11),str(Emoji.TH12),str(Emoji.TH13),str(Emoji.NO_ENTRY),str(Emoji.GREEN_TICK),str(Emoji.GREEN_CROSS),str(Emoji.X)]:
+                await messageObj.remove_reaction(payload.emoji,memberObj)
+            else:
+                if str(payload.emoji) == str(Emoji.NO_ENTRY):
+                    if (discord.utils.get(memberObj.roles, name=RolesGuild1947.ROSTER_COLONAL_ROLE_NAME)):
+                        await messageObj.add_reaction(Emoji.GREEN_TICK)
+                        await messageObj.add_reaction(Emoji.GREEN_CROSS)
+                        await messageObj.remove_reaction(payload.emoji,memberObj)
+                    else:
+                        if memberObj.bot == False:
+                            try:
+                                await memberObj.send(permission_error_msg)
+                                await messageObj.remove_reaction(payload.emoji,memberObj)
+                            except:
+                                await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(permission_error_msg)
+                                await messageObj.remove_reaction(payload.emoji,memberObj)
+                elif str(payload.emoji) == str(Emoji.GREEN_CROSS):
+                    if (discord.utils.get(memberObj.roles, name=RolesGuild1947.ROSTER_COLONAL_ROLE_NAME)):
+                        await messageObj.clear_reaction(Emoji.GREEN_CROSS)
+                        await messageObj.clear_reaction(Emoji.GREEN_TICK)
+                    else:
+                        if memberObj.bot == False:
+                            await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(permission_error_msg)
+                            await messageObj.remove_reaction(payload.emoji,memberObj)
+                elif str(payload.emoji) == str(Emoji.GREEN_TICK):
+                    if (discord.utils.get(memberObj.roles, name=RolesGuild1947.ROSTER_COLONAL_ROLE_NAME)):
+                        if memberObj.bot == False:
+                            await messageObj.clear_reaction(payload.emoji)
+                            await messageObj.clear_reaction(Emoji.NO_ENTRY)
+                            await messageObj.clear_reaction(Emoji.GREEN_CROSS)
+                            try:
+                                nl ="\n"
+                                text = str()
+                                
+                                for reaction in messageObj.reactions:
+                                    users = await reaction.users().flatten()
+                                    
+                                    for user in users:
+                                        if user.bot == False :
+                                            text+= f"{reaction.emoji} :  {user.name} {nl}"
+                                embed = discord.Embed(title="**__ROSTER__**", colour=discord.Colour(0x673c27), description=f"{text}", )
+                            
+                                await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send(content = messageObj.content, embed=embed)
+                            except:
+                                await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send(content = messageObj.content)
+                                for reaction in messageObj.reactions:
+                                    embed = discord.Embed()
+                                    users = await reaction.users().flatten()
+                                    for user in users:
+                                        embed.add_field( name=f"{reaction.emoji}", value=f"{user.name}")
+                                    await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send( embed=embed)
+                            await messageObj.delete()
+
+                    else:
+                        if memberObj.bot == False:
+                            await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(permission_error_msg)
+                            await messageObj.remove_reaction(payload.emoji,memberObj)
+                else:
+                    pass
+
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
         
@@ -489,9 +555,15 @@ class Owner(commands.Cog):
         if message.author.bot:
             return
         if message.channel.id == Guild1947.EKA_BOT_CHANNEL_ID:
-            if list(str(message.content).split())[0] not in ['eka','Eka','EKA']:
-                #await message.delete()
-                await self.bot.get_channel(id=message.channel.id).send("Invalid BOT command.  ```eka help``` If you are looking for BOT commands. Pls use loungue to chat. Thanks")
+            if list(str(message.content).split())[0] not in DiscordConfig.PREFIX:
+                await message.delete()
+                await self.bot.get_channel(id=message.channel.id).send(content="Invalid BOT command.  ```eka help``` If you are looking for BOT commands. Pls use loungue to chat. Thanks",delete_after=20)
+        if message.channel.id == Guild1947.OPT_INT_OUT_CHANNEL_ID:
+            await message.add_reaction(Emoji.NO_ENTRY)
+            await message.add_reaction(Emoji.X)
+            await message.add_reaction(Emoji.TH11)
+            await message.add_reaction(Emoji.TH12)
+            await message.add_reaction(Emoji.TH13)
             
         
 
