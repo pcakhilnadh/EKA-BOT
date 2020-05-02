@@ -22,11 +22,14 @@ class Birthday():
         await self.db_utlis.update_last_run_into_command_on_guild(Guild1947.SERVER_ID,time)
 
     async def wish_birthday(self):
-        await self.update_lasttime_run_in_db()
-        await self.image_maker()
-        file = discord.File(os.path.join(self.directory)+Guild1947Image.TEMP_IMAGE)
         birthday_wishes = f"@everyone Wish {self.userObj.mention}, Happy Birthday !"
-        msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes,file=file)
+        await self.update_lasttime_run_in_db()
+        try:
+            await self.image_maker()
+            file = discord.File(os.path.join(self.directory)+Guild1947Image.TEMP_IMAGE)
+            msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes,file=file)
+        except:
+            msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes)
         await msg.add_reaction(Emoji.BIRTHDAY)
 
     async def image_maker(self):
