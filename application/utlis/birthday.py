@@ -17,7 +17,7 @@ class Birthday():
 
     async def wish_birthday(self):
         await self.update_lasttime_run_in_db()
-        birthday_wishes = f" Wish {self.userObj.mention}, Happy Birthday !"
+        birthday_wishes = f"@everyone Wish {self.userObj.mention}, Happy Birthday !"
         embed = discord.Embed(title = f"Happy Birthday : {self.userObj.name}",color = 0x98FB98)
         embed.set_image(url = self.userObj.avatar_url)
         msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes,embed=embed)
