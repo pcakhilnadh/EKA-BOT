@@ -54,7 +54,7 @@ class EkaBot(commands.AutoShardedBot):
         self.db_utlis = db_utlis
         self.tester = " Im a tester"
         # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
-        self.activity = discord.Activity(type=discord.ActivityType.listening, name='Pc')
+        self.activity = discord.Activity(type=discord.ActivityType.listening, name='EKA')
         for extension in initial_extensions:
             try:
                 self.load_extension(extension)

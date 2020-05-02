@@ -6,6 +6,7 @@ import discord
 from discord.ext import tasks
 from discord.ext import commands
 
+from application.utlis.birthday import Birthday
 from application.constants.guild1947 import Guild1947
 from application.constants.config import DiscordConfig
 from application.constants.emoji import Emoji
@@ -22,29 +23,21 @@ class LoopTaks(commands.Cog):
         self.periodic_check.cancel()
     
     async def birthday_checker(self):
-        await self.db_utlis.update_last_run_into_command_on_guild(Guild1947.SERVER_ID,datetime.now())
+        
         today = date.today()
         user_id = self.db_utlis.users_has_bday_on_date(today)
         if user_id:
             for uid in user_id:
                 userObj=self.bot.get_user(uid)
                 if userObj:
-                    await self.wish_birthday(userObj)
-        
-    async def wish_birthday(self,user_obj):
-        birthday_wishes = f" Wish {user_obj.mention}, Happy Birthday !"
-        embed = discord.Embed(title = f"Happy Birthday : {user_obj.name}",color = 0x98FB98)
-        embed.set_image(url = user_obj.avatar_url)
-        msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes,embed=embed)
-        await msg.add_reaction(Emoji.BIRTHDAY)
-
+                    await Birthday(self.bot,self.db_utlis,userObj).wish_birthday()
+    
     @tasks.loop(hours=6)
     async def periodic_check(self):
         try:
             last_run = await self.db_utlis.fetch_last_run_from_command_on_guild(Guild1947.SERVER_ID)
             now_time = datetime.utcnow()
             time_diiference = now_time - last_run
-            print("time {}--{}--{} ".format(last_run,now_time,time_diiference.days))
             if time_diiference.days >0  :
                 await self.birthday_checker()
         except Exception as Ex:

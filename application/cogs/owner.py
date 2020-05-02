@@ -476,7 +476,7 @@ class Owner(commands.Cog):
             
             memberObj=self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
             messageObj=await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
-            permission_error_msg = f"{memberObj.mention}Sorry, Only 'ROSTER COLONAL' can close the roster opt-in-out"
+            permission_error_msg = f"{memberObj.mention}Sorry, Only `{RolesGuild1947.ROSTER_COLONAL_ROLE_NAME}` can close the roster opt-in-out"
             if str(payload.emoji) not in [str(Emoji.TH11),str(Emoji.TH12),str(Emoji.TH13),str(Emoji.NO_ENTRY),str(Emoji.GREEN_TICK),str(Emoji.GREEN_CROSS),str(Emoji.X)]:
                 await messageObj.remove_reaction(payload.emoji,memberObj)
             else:
@@ -509,26 +509,27 @@ class Owner(commands.Cog):
                             await messageObj.clear_reaction(Emoji.GREEN_CROSS)
                             try:
                                 nl ="\n"
-                                text = str()
-                                
+                                msg_content= messageObj.content.replace("@everyone","")
+                                text = f"{msg_content}{nl} -Closed by {memberObj.name}{nl}**__ROSTER__** {nl}"
                                 for reaction in messageObj.reactions:
                                     users = await reaction.users().flatten()
-                                    
-                                    for user in users:
-                                        if user.bot == False :
-                                            text+= f"{reaction.emoji} :  {user.name} {nl}"
-                                embed = discord.Embed(title="**__ROSTER__**", colour=discord.Colour(0x673c27), description=f"{text}", )
-                            
-                                await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send(content = messageObj.content, embed=embed)
-                            except:
-                                await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send(content = messageObj.content)
-                                for reaction in messageObj.reactions:
-                                    embed = discord.Embed()
-                                    users = await reaction.users().flatten()
-                                    for user in users:
-                                        embed.add_field( name=f"{reaction.emoji}", value=f"{user.name}")
-                                    await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send( embed=embed)
-                            await messageObj.delete()
+                                    if len(users) >1:
+                                        text +=f"{reaction.emoji} {nl}```"
+                                        count =1
+                                        for user in users:
+                                            if user.bot == False :
+                                                text+= f"{count}  {user.display_name} {nl}"
+                                                count+=1
+                                        text += '```'
+                                if len(text)>1900:
+                                    texts = [(text[i:i+1900]) for i in range(0, len(text), 1900)]
+                                    for text in texts: 
+                                        await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send(content = text)
+                                else:
+                                    await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send(content = text)
+                                await messageObj.delete()
+                            except Exception as Ex:
+                                await self.bot.get_channel(Guild1947.BOT_TESTING_CHANNEL_ID).send(content =f"{Ex}")
 
                     else:
                         if memberObj.bot == False:
