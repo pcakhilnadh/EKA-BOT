@@ -22,7 +22,7 @@ class Birthday():
         await self.db_utlis.update_last_run_into_command_on_guild(Guild1947.SERVER_ID,time)
 
     async def wish_birthday(self):
-        birthday_wishes = f"@everyone Wish {self.userObj.mention}, Happy Birthday !"
+        birthday_wishes = f" Wish {self.userObj.mention}, Happy Birthday !"
         await self.update_lasttime_run_in_db()
         try:
             await self.image_maker()
