@@ -26,6 +26,9 @@ class Guild1947():
 
 class Guild1947Image():
     RECRUITMENT_IMAGE_LOC= "/images/recruitment.jpg"
+    POSTER_IMAGE_LOC = "/images/birthday_poster.png"
+    TEMP_IMAGE_LOC = "/images/temp/"
+    TEMP_IMAGE = "/images/temp/temp.png"
     RECRUITMENT_IMAGE_NAME = "recruitment.jpg"
     EKA_ICON_URL ="https://cdn.discordapp.com/attachments/702407723190452324/702782913137213450/JPEG_20200421_200632.jpg"
     NEW_WAR_IMAGE_URL ="https://cdn.discordapp.com/attachments/701323612665151488/701323681619640400/new_war.jpg"
@@ -44,3 +47,5 @@ class RolesGuild1947():
     GUEST_ROLE_NAME = "g u e ѕ т"
     ROSTER_COLONAL_ROLE_NAME ="r O ѕ т e r  c o L o n e l"
     
+class Guild1947Font():
+    MODAK_FONT = "/fonts/Modak.ttf"

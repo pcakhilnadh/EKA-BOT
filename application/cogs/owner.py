@@ -24,6 +24,7 @@ from application.models.member_model import MemberModel
 from application.utlis.discordGuild import Guild
 from application.constants.config import DiscordConfig
 from application.cogs.utils.paginator import TextPages
+from application.utlis.birthday import Birthday
 
 class Owner(commands.Cog):
 
@@ -245,8 +246,8 @@ class Owner(commands.Cog):
     @commands.is_owner()
     async def test_command(self, ctx):
         """eka misshit @mention <Optional Msg>"""
-        r=self.bot.db_utlis.fetch_last_run_from_command_on_guild(GuildSupport.SERVER_ID)
-        await self.bot.get_channel(GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f"---->{r} {type(r)}")
+        await Birthday(self.bot,self.bot.db_utlis,ctx.message.author).wish_birthday()
+        #await self.bot.get_channel(GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f"---->{r} {type(r)}")
     
     @commands.command(aliases=['latehit','lateattack'])
     @commands.has_any_role(RolesGuildSupport.ADMIN_ROLE_NAME, RolesGuild1947.ADMIN_ROLE_NAME) 
