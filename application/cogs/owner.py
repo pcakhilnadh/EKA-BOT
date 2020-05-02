@@ -58,6 +58,8 @@ class Owner(commands.Cog):
             embed.add_field(name=f"Want to get GUEST role ?", value=f":sos: React with EKA logo in {about.mention} \n\n")
             #embed.set_image(url="attachment://recruitment.jpg")
             await welcomechannel.send(content=f"{member.mention}",file=file,embed = embed)
+            if not self.bot.db_utlis.insert_into_member_table(member.id,member.joined_at):
+                logging,error("Cannot Insert Member on join")
             try:
                 await member.send(content=f"{member.mention}",file=file, embed =embed)
             except:
@@ -75,6 +77,8 @@ class Owner(commands.Cog):
             color = 0x07999b
             )
             await welcomechannel.send(embed = embed)
+            if not self.bot.db_utlis.delete_from_member_table(member.id):
+                logging,error("Cannot Delete Member on join")
 
         if member.guild.id == GuildSupport.SERVER_ID:
             welcomechannel = self.bot.get_channel(GuildSupport.WELCOME_CHANNEL_ID)

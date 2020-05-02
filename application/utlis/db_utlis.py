@@ -36,6 +36,16 @@ class PostgreDB_Utils:
         except Exception as Ex:
             logging.error(" Error in insert_into_table : {}".format(Ex))
             return False
+    
+    def delete_from_member_table(self,id):
+            try:
+                ins = self.sql_session.query(MemberModel).filter(MemberModel.member_id==id).delete()
+                self.sql_session.commit()
+                return True
+            except Exception as Ex:
+                logging.error(" Error in insert_into_table : {}".format(Ex))
+                return False
+    
 
     def update_member_table(self,id,join_date,dob,update_dob=False):
         try:
