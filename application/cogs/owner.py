@@ -47,9 +47,9 @@ class Owner(commands.Cog):
     async def delete_member(self, ctx, id: int):
         """Delete a member by ID"""
         if self.bot.db_utlis.delete_from_member_table(int(id)):
-            await ctx.msg.add_reaction(Emoji.GREEN_TICK)
+            await ctx.message.add_reaction(Emoji.GREEN_TICK)
         else:
-            await ctx.msg.add_reaction(Emoji.GREEN_CROSS)
+            await ctx.message.add_reaction(Emoji.GREEN_CROSS)
     @commands.Cog.listener()
     async def on_member_join(self,member):
         x=time.time()
