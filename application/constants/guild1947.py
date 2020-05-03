@@ -23,6 +23,7 @@ class Guild1947():
     ANNOUNCEMENT_CHANNEL_ID=561474553688096778
     OPT_INT_OUT_CHANNEL_ID =699163838821564426
     ROSTER_CHANNEL_ID = 567392934534840350
+    POST_TO_TWITTER_CHANNEL_ID = 577023021655523339
 
 class Guild1947Image():
     RECRUITMENT_IMAGE_LOC= "/images/recruitment.jpg"
@@ -49,3 +50,4 @@ class RolesGuild1947():
     
 class Guild1947Font():
     MODAK_FONT = "/fonts/Modak.ttf"
+    PINEAPPLE_FONT = "/fonts/pineapple.ttf"

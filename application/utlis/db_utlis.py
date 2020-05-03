@@ -29,9 +29,11 @@ class PostgreDB_Utils:
     
     def insert_into_member_table(self,id,join_date):
         try:
-            ins = MemberModel(member_id=id,joined_on=join_date)
-            self.sql_session.add(ins)
-            self.sql_session.commit()
+            r = self.sql_session.query(MemberModel).filter(MemberModel.member_id==id).first()
+            if r is None :
+                ins = MemberModel(member_id=id,joined_on=join_date)
+                self.sql_session.add(ins)
+                self.sql_session.commit()
             return True
         except Exception as Ex:
             logging.error(" Error in insert_into_table : {}".format(Ex))
@@ -39,6 +41,7 @@ class PostgreDB_Utils:
     
     def delete_from_member_table(self,id):
             try:
+                id=int(id)
                 ins = self.sql_session.query(MemberModel).filter(MemberModel.member_id==id).delete()
                 self.sql_session.commit()
                 return True

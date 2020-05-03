@@ -42,6 +42,14 @@ class Owner(commands.Cog):
         msg.content = ctx.prefix + command
         new_ctx = await self.bot.get_context(msg)
         await self.bot.invoke(new_ctx)
+    @commands.command()
+    @commands.is_owner()
+    async def delete_member(self, ctx, id: int):
+        """Delete a member by ID"""
+        if self.bot.db_utlis.delete_from_member_table(int(id)):
+            await ctx.msg.add_reaction(Emoji.GREEN_TICK)
+        else:
+            await ctx.msg.add_reaction(Emoji.GREEN_CROSS)
     @commands.Cog.listener()
     async def on_member_join(self,member):
         x=time.time()
@@ -78,8 +86,8 @@ class Owner(commands.Cog):
             color = 0x07999b
             )
             await welcomechannel.send(embed = embed)
-            if not self.bot.db_utlis.delete_from_member_table(member.id):
-                logging,error("Cannot Delete Member on join")
+            # if not self.bot.db_utlis.delete_from_member_table(member.id):
+            #     logging,error("Cannot Delete Member on join")
 
         if member.guild.id == GuildSupport.SERVER_ID:
             welcomechannel = self.bot.get_channel(GuildSupport.WELCOME_CHANNEL_ID)
@@ -433,7 +441,8 @@ class Owner(commands.Cog):
                     await applicantObj.add_roles(fieldMarshalRoleObj) 
                     await self.recruitment_log_maker(self.bot.get_channel(payload.channel_id),Emoji.NUMBER_ONE)
                     await self.bot.get_channel(payload.channel_id).delete()    
-                    await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(f" A new Recruit has been joined EKA, Please wish {applicantObj.mention} Goodluck !")
+                    await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(f"@here, A new Recruit has been joined EKA, Please wish {applicantObj.mention} Goodluck !")
+                    await self.bot.get_channel(Guild1947.POST_TO_TWITTER_CHANNEL_ID).send(f"Everyone, A new Recruit has been joined EKA, Please wish {applicantObj.display_name} Goodluck !")
                     embed = discord.Embed(title = f"Congrats ! You are recruited",description = " You are selected for Tryouts in EKA. Goodluck",color = 0x98FB98)
                     embed.set_thumbnail(url=Guild1947Image.EKA_ICON_URL)
         
