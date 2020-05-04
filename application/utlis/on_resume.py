@@ -10,8 +10,8 @@ class OnResume():
     def __init__(self,bot,db_utlis):
         self.bot= bot
         self.db_utlis = db_utlis
-    async def print_msg(self):
-        bot_online_channel = self.bot.get_channel(bot_online_channel_id)
+    async def print_msg(self): 
+        bot_online_channel = self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID)
         now_time = datetime.utcnow()
         message = f"Resumed : {now_time}"
         await bot_online_channel.send(content=message)
