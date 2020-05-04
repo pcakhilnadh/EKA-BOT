@@ -23,7 +23,7 @@ class LoopTaks(commands.Cog):
         except RuntimeError as Ex:
             self.periodic_check.cancel()
             self.periodic_check.start()
-            self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID).send(f"Error : {Ex}")
+            await self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID).send(f"Error : {Ex}")
 
     def stop(self):
         self.periodic_check.cancel()
@@ -47,9 +47,9 @@ class LoopTaks(commands.Cog):
             last_run = await self.db_utlis.fetch_last_run_from_command_on_guild(Guild1947.SERVER_ID)
             now_time = datetime.utcnow()
             time_diiference = now_time - last_run
-            self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID).send(f"time {now_time} last time {last_run}")
+            await self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID).send(f"time {now_time} last time {last_run}")
             if time_diiference.days >0  :
-                self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID).send("Run")
+                await self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID).send("Run")
                 await self.birthday_checker()
         except Exception as Ex:
             print(Ex)
