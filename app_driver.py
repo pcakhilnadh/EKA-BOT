@@ -11,6 +11,7 @@ from datetime import datetime
 import logging
 # userFunctions
 from application.utlis.on_ready import OnReady
+from application.utlis.on_resume import OnResume
 from application.cogs.utils import context
 from application.constants.config import DiscordConfig
 from application.constants.config import GuildSupport
@@ -106,6 +107,9 @@ class EkaBot(commands.AutoShardedBot):
         await on_ready_obj.run_tasks()
         print(f'Ready...!')
     async def on_resumed(self):
+        on_resume_obj = OnResume(super(),self.db_utlis)
+        await on_resume_obj.print_msg()
+        await on_resume_obj.run_tasks()
         print('resumed...')
 
     async def close(self):

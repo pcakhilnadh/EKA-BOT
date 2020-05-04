@@ -17,7 +17,11 @@ class LoopTaks(commands.Cog):
         self.check=0
 
     def run(self):
-        self.periodic_check.start()
+        try:
+            self.periodic_check.start()
+        except RuntimeError:
+            self.periodic_check.cancel()
+            self.periodic_check.start()
 
     def cog_unload(self):
         self.periodic_check.cancel()
@@ -32,7 +36,7 @@ class LoopTaks(commands.Cog):
                 if userObj:
                     await Birthday(self.bot,self.db_utlis,userObj).wish_birthday()
     
-    @tasks.loop(hours=6)
+    @tasks.loop(hours=1)
     async def periodic_check(self):
         try:
             last_run = await self.db_utlis.fetch_last_run_from_command_on_guild(Guild1947.SERVER_ID)

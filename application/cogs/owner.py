@@ -25,6 +25,7 @@ from application.utlis.discordGuild import Guild
 from application.constants.config import DiscordConfig
 from application.cogs.utils.paginator import TextPages
 from application.utlis.birthday import Birthday
+from application.utlis.on_loop import LoopTaks
 
 class Owner(commands.Cog):
 
@@ -250,11 +251,17 @@ class Owner(commands.Cog):
         except:
             pass
     @commands.command(aliases=['test','t'])
-    @commands.has_any_role(RolesGuildSupport.ADMIN_ROLE_NAME, RolesGuild1947.ADMIN_ROLE_NAME) 
     @commands.is_owner()
     async def test_command(self, ctx):
-        """eka misshit @mention <Optional Msg>"""
-        await Birthday(self.bot,self.bot.db_utlis,ctx.message.author).wish_birthday()
+        """Test"""
+        try:
+            tasks = LoopTaks(self.bot,self.bot.db_utlis)
+            tasks.run()
+            await ctx.message.add_reaction(Emoji.GREEN_TICK)
+            time = datetime.utcnow()
+            await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Time :{time}")
+        except:
+            await ctx.message.add_reaction(Emoji.GREEN_CROSS)
         #await self.bot.get_channel(GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f"---->{r} {type(r)}")
     
     @commands.command(aliases=['latehit','lateattack'])
