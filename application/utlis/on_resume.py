@@ -11,6 +11,7 @@ class OnResume():
         self.bot= bot
         self.db_utlis = db_utlis
     async def print_msg(self):
+        bot_online_channel = self.bot.get_channel(bot_online_channel_id)
         now_time = datetime.utcnow()
         message = f"Resumed : {now_time}"
         await bot_online_channel.send(content=message)
