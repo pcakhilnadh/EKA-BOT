@@ -256,11 +256,16 @@ class Owner(commands.Cog):
         """Test"""
         try:
             tasks = LoopTaks(self.bot,self.bot.db_utlis)
-            tasks.run()
-            await ctx.message.add_reaction(Emoji.GREEN_TICK)
+            try:
+                tasks.run()
+            except RuntimeError:
+                tasks.stop()
+                tasks.run()
             time = datetime.utcnow()
             await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Time :{time}")
-        except:
+            await ctx.message.add_reaction(Emoji.GREEN_TICK)
+        except Exception as Ex:
+            await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Error :{Ex}")
             await ctx.message.add_reaction(Emoji.GREEN_CROSS)
         #await self.bot.get_channel(GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(f"---->{r} {type(r)}")
     
