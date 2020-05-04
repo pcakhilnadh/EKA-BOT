@@ -45,18 +45,25 @@ class User(commands.Cog):
             await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(content=msg)
         if user.bot:
             return
-        nl="\n"
-        format = '%d-%m-%Y %H:%M %p'
-        user = self.bot.get_guild(Guild1947.SERVER_ID).get_member(user.id)
-        role_msg = f"Roles : " 
-        for role in user.roles:
-            role_msg += f"`{role.name}`"
-        embed = discord.Embed(title = f"Details of  : {user.display_name}",
-            color = 0x98FB98, description=f"Name :{user}{nl} Joined Server :{datetime.strftime(user.joined_at,format)}{nl} Discord Created on :{datetime.strftime(user.created_at,format)} {nl} Higest Role :{user.top_role.name} {nl} {role_msg}"
-            )
-        embed.set_image(url = user.avatar_url) 
-        await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(embed=embed)
-        await ctx.message.add_reaction(Emoji.GREEN_TICK)
+        try:
+            nl="\n"
+            format = '%d-%m-%Y %H:%M %p'
+            user = self.bot.get_guild(Guild1947.SERVER_ID).get_member(user.id)
+            role_msg = f"Roles : " 
+            for role in user.roles:
+                role_msg += f"`{role.name}`"
+            embed = discord.Embed(title = f"Details of  : {user.display_name}",
+                color = 0x98FB98, description=f"Name :{user}{nl} Joined Server :{datetime.strftime(user.joined_at,format)}{nl} Discord Created on :{datetime.strftime(user.created_at,format)} {nl} Higest Role :{user.top_role.name} {nl} {role_msg}"
+                )
+            embed.set_image(url = user.avatar_url) 
+            await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(embed=embed)
+            await ctx.message.add_reaction(Emoji.GREEN_TICK)
+        except:
+            embed = discord.Embed(title = f"Details of  : {user.name}",
+                color = 0x98FB98, description=f"Name :{user}{nl}  Discord Created on :{datetime.strftime(user.created_at,format)} {nl} "
+                )
+            embed.set_image(url = user.avatar_url) 
+            await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(embed=embed)
 
 
     @commands.command(aliases=['Dm','dm','DM'])
