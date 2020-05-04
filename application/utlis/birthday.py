@@ -32,7 +32,7 @@ class Birthday():
             msg = await self.bot.get_channel(Guild1947.POST_TO_TWITTER_CHANNEL_ID).send(content=bday_wish,file=file)
         except Exception as Ex:
             #print("In wish_birthday () :",Ex)
-            msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes)
+            await self.bot.get_channel(GuildSupport.BOT_COMMANDS_CHANNEL_ID).send(content=Ex)
         await msg.add_reaction(Emoji.BIRTHDAY)
         
 
