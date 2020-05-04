@@ -257,10 +257,10 @@ class Owner(commands.Cog):
         try:
             tasks = LoopTaks(self.bot,self.bot.db_utlis)
             try:
-                tasks.run()
+                await tasks.run()
             except RuntimeError:
                 tasks.stop()
-                tasks.run()
+                await tasks.run()
             time = datetime.utcnow()
             await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Time :{time}")
             await ctx.message.add_reaction(Emoji.GREEN_TICK)

@@ -17,7 +17,7 @@ class LoopTaks(commands.Cog):
         self.db_utlis = db_utlis
         self.check=0
 
-    def run(self):
+    async def run(self):
         try:
             self.periodic_check.start()
         except RuntimeError as Ex:

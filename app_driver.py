@@ -16,7 +16,7 @@ from application.cogs.utils import context
 from application.constants.config import DiscordConfig
 from application.constants.config import GuildSupport
 import os
-
+from application.utlis.on_loop import LoopTaks
 description = 'A Discord Bot for Elite Kerala Alliance'
 OWNER = DiscordConfig.BOT_OWNER_ID
 
@@ -125,6 +125,8 @@ class EkaBot(commands.AutoShardedBot):
         await super().close()
         await self.session.close()
         self._task.cancel()
+        LoopTaks(super(),self.db_utlis).stop()
+
 
     
 

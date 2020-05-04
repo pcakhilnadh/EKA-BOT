@@ -17,6 +17,6 @@ class OnResume():
 
     async def run_tasks(self):
         tasks = LoopTaks(self.bot,self.db_utlis)
-        tasks.run()
+        await tasks.run()
         
     
