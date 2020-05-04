@@ -47,7 +47,7 @@ class User(commands.Cog):
             return
         nl="\n"
         format = '%d-%m-%Y %H:%M %p'
-        user = self.bot.get_member(user.id)
+        user = self.bot.get_guild(Guild1947.SERVER_ID).get_member(user.id)
         role_msg = f"Roles : " 
         for role in user.roles:
             role_msg += f"`{role.name}`"
