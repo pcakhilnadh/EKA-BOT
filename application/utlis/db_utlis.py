@@ -1,6 +1,6 @@
 import logging
 import asyncio
-from sqlalchemy import and_,desc
+from sqlalchemy import and_,desc,extract
 
 from application.config.db_connection import PostgreDBConnector
 from application.models.member_model import MemberModel 
@@ -95,13 +95,11 @@ class PostgreDB_Utils:
     def users_has_bday_on_date(self,date):
         try:
             user_id = list()
-            result =self.sql_session.query(MemberModel).filter(MemberModel.dob==date).all()
-            if result is None:
-                return None
-            else:
-                for row in result: 
+            result =self.sql_session.query(MemberModel).filter(MemberModel.dob.isnot(None)).all()
+            for row in result: 
+                if ((row.dob.month == date.month) and (row.dob.day == date.day)):
                     user_id.append(row.member_id)
-                return user_id
+            return user_id
         except Exception as Ex:
             logging.error(" Error in users_has_bday_on_date : {}".format(Ex))
             return None

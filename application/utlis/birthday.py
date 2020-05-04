@@ -30,7 +30,8 @@ class Birthday():
             file = discord.File(os.path.join(self.directory)+Guild1947Image.TEMP_IMAGE)
             msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes,file=file)
             msg = await self.bot.get_channel(Guild1947.POST_TO_TWITTER_CHANNEL_ID).send(content=bday_wish,file=file)
-        except:
+        except Exception as Ex:
+            #print("In wish_birthday () :",Ex)
             msg = await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(content=birthday_wishes)
         await msg.add_reaction(Emoji.BIRTHDAY)
         

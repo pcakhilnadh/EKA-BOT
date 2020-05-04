@@ -32,7 +32,6 @@ class LoopTaks(commands.Cog):
         self.periodic_check.cancel()
     
     async def birthday_checker(self):
-        
         today = date.today()
         user_id = self.db_utlis.users_has_bday_on_date(today)
         if user_id:
@@ -49,7 +48,6 @@ class LoopTaks(commands.Cog):
             time_diiference = now_time - last_run
             await self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID).send(f"time {now_time} last time {last_run}")
             if time_diiference.days >0  :
-                await self.bot.get_channel(GuildSupport.BOT_STATUS_CHANNEL_ID).send("Run")
                 await self.birthday_checker()
         except Exception as Ex:
             print(Ex)
