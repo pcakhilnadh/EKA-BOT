@@ -550,9 +550,9 @@ class Owner(commands.Cog):
                                 if len(text)>1900:
                                     texts = [(text[i:i+1900]) for i in range(0, len(text), 1900)]
                                     for text in texts: 
-                                        await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send(content = text)
+                                        await self.bot.get_channel(Guild1947.ADMIN_TALK_CHANNEL_ID).send(content = text)
                                 else:
-                                    await self.bot.get_channel(Guild1947.ROSTER_CHANNEL_ID).send(content = text)
+                                    await self.bot.get_channel(Guild1947.ADMIN_TALK_CHANNEL_ID).send(content = text)
                                 await messageObj.delete()
                             except Exception as Ex:
                                 await self.bot.get_channel(Guild1947.BOT_TESTING_CHANNEL_ID).send(content =f"{Ex}")
