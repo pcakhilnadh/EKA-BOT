@@ -454,7 +454,7 @@ class Owner(commands.Cog):
                     await self.recruitment_log_maker(self.bot.get_channel(payload.channel_id),Emoji.NUMBER_ONE)
                     await self.bot.get_channel(payload.channel_id).delete()    
                     await self.bot.get_channel(Guild1947.ANNOUNCEMENT_CHANNEL_ID).send(f"@here, A new Recruit has been joined EKA, Please wish {applicantObj.mention} Goodluck !")
-                    await self.bot.get_channel(Guild1947.POST_TO_TWITTER_CHANNEL_ID).send(f"Everyone, A new Recruit has been joined EKA, Please wish {applicantObj.display_name} Goodluck !")
+                    #await self.bot.get_channel(Guild1947.POST_TO_TWITTER_CHANNEL_ID).send(f"Everyone, A new Recruit has been joined EKA, Please wish {applicantObj.display_name} Goodluck !")
                     embed = discord.Embed(title = f"Congrats ! You are recruited",description = " You are selected for Tryouts in EKA. Goodluck",color = 0x98FB98)
                     embed.set_thumbnail(url=Guild1947Image.EKA_ICON_URL)
         
@@ -489,7 +489,9 @@ class Owner(commands.Cog):
                     try:
                         await applicantObj.send(embed=embed)
                     except Exception as Ex:
+                        applicantObj = self.bot.get_user(applicant_id)
                         await self.bot.get_channel(Guild1947.BOT_TESTING_CHANNEL_ID).send(f"{Ex}")
+                        await self.bot.get_channel(Guild1947.GLOBAL_CHAT_CHANNEL_ID).send(content=f"{applicantObj.mention} Sorry, You have turned off your DM. Your recruitment has been put on hold.",embed=embed)
                 
                 else:
                     if memberObj.bot==False:
