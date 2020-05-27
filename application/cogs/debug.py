@@ -150,7 +150,7 @@ Owner: {guild.owner} [{guild.owner.id}]"""
                 embed.add_field(name="Information", value=field)
                 
                 await self.error_logs.send(embed=embed)
-                raise error
+                #raise error
         except:
             pass
 

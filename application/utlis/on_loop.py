@@ -12,7 +12,7 @@ from application.constants.guildsupport import GuildSupport
 from application.constants.config import DiscordConfig
 from application.constants.emoji import Emoji
 class LoopTaks(commands.Cog):
-    def __init__(self, bot,db_utlis):
+    def __init__(self, bot):
         self.bot = bot
         self.db_utlis = db_utlis
         self.check=0

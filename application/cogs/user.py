@@ -17,14 +17,14 @@ from application.constants.guildsupport import *
 from application.constants.emoji import *
 from application.cogs.utils.paginator import TextPages
 from application.constants.config import DiscordConfig
-from application.utlis.birthday import Birthday
+#from application.utlis.birthday import Birthday
 
 class User(commands.Cog):
     """ EKA members will have all these fun """
     def __init__(self, bot):
         self.bot = bot
         self.sessions = set()
-    
+    '''
     @commands.command(aliases=['Av','av','avatar','Avatar'])
     async def user_avatar(self, ctx, user:discord.User):
         """--> `eka av @mentionUser `"""
@@ -90,7 +90,7 @@ class User(commands.Cog):
             Msg=await self.bot.get_channel(id=Guild1947.EKA_BOT_CHANNEL_ID).send(f"Sorry {ctx.message.author}, The user has disabled DM. Your message could not be sent.```eka dm @mentionUser YourMessage``` to DM someone")
             await Msg.add_reaction(Emoji.X)
         await ctx.message.delete()
-
+    
     @commands.command(aliases=['add_birthday','Add_birthday','Add_bday'])
     async def add_bday(self, ctx, message:str):
         """--> `eka add_bday dd-mm-yyyy `"""
@@ -144,16 +144,18 @@ class User(commands.Cog):
         try:
             result=self.bot.db_utlis.fetch_bday()
             text = str()
-            for row in result:
-                userObj=self.bot.get_user(row.member_id)
+            print(result,type(result))
+            
+            for member_id in result:
+                print(member_id,type(member_id))
+                userObj=self.bot.get_user(member_id)
                 if userObj:
                     text += f"{userObj.name} - {row.dob} \n "
             p = TextPages(ctx, text=text ,max_size=500)
             await p.paginate()
         except Exception as Ex:
             logging.error("ERROR : user.py : list_bday : {}".format(Ex))
-        
-
+    '''
 def setup(bot):
     bot.add_cog(User(bot))
 

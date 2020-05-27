@@ -20,7 +20,7 @@ from application.constants.guildsupport import *
 from application.constants.guild1947 import *
 from application.constants.emoji import *
 from application.constants.config import *
-from application.models.member_model import MemberModel 
+#from application.models.member_model import MemberModel 
 from application.utlis.discordGuild import Guild
 from application.constants.config import DiscordConfig
 from application.cogs.utils.paginator import TextPages

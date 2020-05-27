@@ -16,7 +16,7 @@ from application.cogs.utils import context
 from application.constants.config import DiscordConfig
 from application.constants.config import GuildSupport
 import os
-from application.utlis.on_loop import LoopTaks
+#from application.utlis.on_loop import LoopTaks
 description = 'A Discord Bot for Elite Kerala Alliance'
 OWNER = DiscordConfig.BOT_OWNER_ID
 
@@ -45,14 +45,14 @@ initial_extensions = (
 
 class EkaBot(commands.AutoShardedBot):
 
-    def __init__(self,db_utlis):
+    def __init__(self):
         super().__init__(command_prefix=get_prefix, description=description)
 
         self.owner_id = DiscordConfig.BOT_OWNER_ID
         self.channel_id = DiscordConfig.ALLOWED_CHANNELS
         self.guild_id = DiscordConfig.ALLOWED_GUILDS
         self._task = self.loop.create_task(self.initialize())
-        self.db_utlis = db_utlis
+        #self.db_utlis = db_utlis
         self.tester = " Im a tester"
         # self.spam_control = commands.CooldownMapping.from_cooldown(10, 12, commands.BucketType.user)
         self.activity = discord.Activity(type=discord.ActivityType.listening, name='EKA')
@@ -102,30 +102,30 @@ class EkaBot(commands.AutoShardedBot):
         await self.process_commands(message)
 
     async def on_ready(self):
-        on_ready_obj = OnReady(super(),self.db_utlis)
-        await on_ready_obj.print_msg()
-        await on_ready_obj.run_tasks()
+        #on_ready_obj = OnReady(super())
+        #await on_ready_obj.print_msg()
+        #await on_ready_obj.run_tasks()
         print(f'Ready...!')
     async def on_resumed(self):
-        on_resume_obj = OnResume(super(),self.db_utlis)
+        #on_resume_obj = OnResume(super())
         await on_resume_obj.print_msg()
         await on_resume_obj.run_tasks()
         print('resumed...')
 
     async def close(self):
-        bot_online_channel_id = 586993318035062785
-        bot_online_channel = super().get_channel(bot_online_channel_id)
+        #bot_online_channel_id = 586993318035062785
+        #bot_online_channel = super().get_channel(bot_online_channel_id)
         title = " BOT Online Status"
         description = "\n BOT is offline"
         embed = discord.Embed(title=title,
                               description=description,
                               color=discord.Color.red())
-        await bot_online_channel.send(embed=embed)
+        #await bot_online_channel.send(embed=embed)
         print(f'BOT is offline')
         await super().close()
         await self.session.close()
         self._task.cancel()
-        LoopTaks(super(),self.db_utlis).stop()
+        #LoopTaks(super()).stop()
 
 
     
