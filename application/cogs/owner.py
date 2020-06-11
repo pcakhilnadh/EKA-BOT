@@ -86,7 +86,7 @@ class Owner(commands.Cog):
             description = f"{member} left {member.guild.name} server!",
             color = 0x07999b
             )
-            await welcomechannel.send(embed = embed)
+            #await welcomechannel.send(embed = embed)
             # if not self.bot.db_utlis.delete_from_member_table(member.id):
             #     logging,error("Cannot Delete Member on join")
 
@@ -226,7 +226,7 @@ class Owner(commands.Cog):
             CategoryInfo, Channels = category
             if CategoryInfo.id == Guild1947.RECRUITMENT_CATEGORY_ID: #Recruitment Category 
                 permission=CategoryInfo.overwrites
-                permission[memberObj]=discord.PermissionOverwrite(read_messages=True,manage_channels=False,add_reactions=False,read_message_history=True,create_instant_invite=False)
+                permission[memberObj]=discord.PermissionOverwrite(read_messages=True,send_messages=True,attach_files=True,manage_channels=False,add_reactions=False,read_message_history=True,create_instant_invite=False)
                 recruitmentchannel = await CategoryInfo.create_text_channel(f'Applicant-{memberObj.name}', overwrites=permission)
                 await recruitmentchannel.send(f"RECRUITMENT : {memberObj.name} : {memberObj.id}")
                 embed = discord.Embed(colour=discord.Colour(0x673c27),description=f"Hello {memberObj.name}, Please Post the following information in this channel  \n\n{Emoji.NUMBER_ONE} ss of your base and Profile. \n{Emoji.NUMBER_TWO}  Tell the Strategies You use.\n{Emoji.NUMBER_THREE}  Previous Clans.\n{Emoji.NUMBER_FOUR} Reason to Join EKA\n{Emoji.NUMBER_FIVE} Actual Name and Age\n{Emoji.NUMBER_SIX} Place and Timezone\n{Emoji.NUMBER_SEVEN} COC Player Tag of All of your accounts \n{Emoji.NUMBER_EIGHT} Leage Experience (Specify Leagues and represented Clan Name you had participated) \n\n {Emoji.SOS} Tag a Recruiter afterwards. ", timestamp=datetime.datetime.utcfromtimestamp(x))
@@ -491,7 +491,7 @@ class Owner(commands.Cog):
                     except Exception as Ex:
                         applicantObj = self.bot.get_user(applicant_id)
                         await self.bot.get_channel(Guild1947.BOT_TESTING_CHANNEL_ID).send(f"{Ex}")
-                        await self.bot.get_channel(Guild1947.GLOBAL_CHAT_CHANNEL_ID).send(content=f"{applicantObj.mention} Sorry, You have turned off your DM. Your recruitment has been put on hold.",embed=embed)
+                        await self.bot.get_channel(Guild1947.GLOBAL_CHAT_CHANNEL_ID).send(content=f"{applicantObj.mention} Sorry, You have turned off your DM. Your recruitment has been put on hold.")
                 
                 else:
                     if memberObj.bot==False:
@@ -552,9 +552,9 @@ class Owner(commands.Cog):
                                 if len(text)>1900:
                                     texts = [(text[i:i+1900]) for i in range(0, len(text), 1900)]
                                     for text in texts: 
-                                        await self.bot.get_channel(Guild1947.ADMIN_TALK_CHANNEL_ID).send(content = text)
+                                        await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(content = text)
                                 else:
-                                    await self.bot.get_channel(Guild1947.ADMIN_TALK_CHANNEL_ID).send(content = text)
+                                    await self.bot.get_channel(Guild1947.LONGUE_CHANNEL_ID).send(content = text)
                                 await messageObj.delete()
                             except Exception as Ex:
                                 await self.bot.get_channel(Guild1947.BOT_TESTING_CHANNEL_ID).send(content =f"{Ex}")
