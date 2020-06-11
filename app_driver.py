@@ -108,8 +108,8 @@ class EkaBot(commands.AutoShardedBot):
         print(f'Ready...!')
     async def on_resumed(self):
         #on_resume_obj = OnResume(super())
-        await on_resume_obj.print_msg()
-        await on_resume_obj.run_tasks()
+        #await on_resume_obj.print_msg()
+        #await on_resume_obj.run_tasks()
         print('resumed...')
 
     async def close(self):
