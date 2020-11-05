@@ -46,7 +46,9 @@ initial_extensions = (
 class EkaBot(commands.AutoShardedBot):
 
     def __init__(self):
-        super().__init__(command_prefix=get_prefix, description=description)
+        intents = discord.Intents.default()
+        intents.members = True  # Subscribe to the privileged members intent.
+        super().__init__(command_prefix=get_prefix, description=description, intents=intents)
 
         self.owner_id = DiscordConfig.BOT_OWNER_ID
         self.channel_id = DiscordConfig.ALLOWED_CHANNELS
